@@ -1,0 +1,47 @@
+[project]
+name = 'pntos-python-exercises'
+version = '0.1.0.dev0'
+description = 'A meta package for pntOS-Python exercises.'
+readme = 'README.md'
+authors = [ { name = 'IS4S', email = 'pntos@is4s.com' } ]
+requires-python = '>=3.10'
+
+classifiers = [
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+]
+
+dependencies = [
+    # main branch, committed 18 March 2026
+    'pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-api',
+    'pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-cobra',
+]
+
+[dependency-groups]
+dev = [
+    'mypy==1.18.2',
+    'myst-parser>=4',
+    'pip>=24',
+    # Generated from commit ce6c78bd72ca4d3f890987f0c13e1d0c12acced3 on 17 March 2026
+    "pntos-python-exercises-docs-data==0.1.0",
+    'ruff==0.13.2',
+    'sphinx>=7.3.7',
+    'sphinx-rtd-theme>=3.0.2',
+]
+
+[tool.ruff]
+format.quote-style = 'single'
+
+[tool.mypy]
+strict = true
+warn_unreachable = true
+
+[tool.uv]
+package = false
+
+[[tool.uv.index]]
+url = 'https://git.aspn.us/api/v4/projects/94/packages/pypi/simple'
+cache-control = { api = 'max-age=600', files = 'max-age=365000000, immutable' }

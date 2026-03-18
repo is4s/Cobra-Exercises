@@ -1,0 +1,26 @@
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv
+.*_cache
+.DS_Store
+**/registry_permanency_files/
+.coverage*
+.vscode
+*.hdf5
+# LCM Logger artifacts
+*.log
+.idea/
+
+# Plotting artifacts
+*.pickle
+*.png
+metadata.yaml
+*.db3
+*.mcap
+
+# Artifacts from building the docs
+docs/images/
