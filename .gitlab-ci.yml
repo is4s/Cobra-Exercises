@@ -110,7 +110,7 @@ documentation check:
         - docker run --rm -dit -v $(pwd):/work -v $HOME/.ccache:/root/.cache/uv --name pntos-python -e UV_INDEX=${UV_INDEX} $DOCKER_IMAGE bash
         - docker exec pntos-python uv sync
         # Build the documentation
-        - docker exec -e TZ=UTC pntos-python sphinx-build --exception-on-warning docs/ docs/build/
+        - docker exec -e TZ=UTC pntos-python util/build_docs.sh
     artifacts:
         expose_as: "documentation"
         paths:
