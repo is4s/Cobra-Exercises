@@ -16,7 +16,7 @@ You can find the exercises below. They are generally ordered in terms of increas
 complexity.
 
 ```{toctree}
-exercise1
+new_app_exercise
 zupt_exercise
 exercise2
 ```
