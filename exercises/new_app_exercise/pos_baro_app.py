@@ -24,6 +24,7 @@ from pntos.cobra import (
 from pntos.cobra.config import (
     AspnVersion,
     ControllerConfig,
+    BarometerToAltitudeConfig,
     FogmConfig,
     FogmStateBlockConfig,
     ImuConfig,
@@ -36,7 +37,6 @@ from pntos.cobra.config import (
     SensorMeasurementProcessorConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
-    TimeBiasConfig,
 )
 from pntos_python_datasets import EXAMPLE_LCM_LOG
 
@@ -82,33 +82,33 @@ my_config = [
         ),
         additional_sb_configs=(
             FogmStateBlockConfig(
-                group='config/pos_fogm_block',
-                label='pos_sensor_error',
+                group='config/alt_fogm_block',
+                label='alt_fogm',
                 estimate_with_covariance=EstimateWithCovariance(
                     type=EstimateWithCovarianceType.EWC_GENERIC,
-                    estimate=np.zeros((3,)),
-                    covariance=(np.eye(3) * 9.0),
+                    estimate=np.zeros((1,)),
+                    covariance=(np.array([[100.0**2]])),
                 ),
                 fogm_model=FogmConfig(
-                    group='config/pos_sensor_error',
-                    sigma=(1.5, 1.5, 2.0),
-                    tau=(300.0, 300.0, 200.0),
+                    group='config/alt_sensor_error',
+                    sigma=(100.0,),
+                    tau=(3600.0,),
                 ),
             ),
         ),
         mp_configs=(
             SensorMeasurementProcessorConfig(
-                group='config/gps_measurement_processor',
-                identifier='pinson_with_ned_fogm_position',
-                label='gps',
-                channel='/sensor/ublox-ZED-F9T/position',
-                state_block_labels=('pinson15', 'pos_sensor_error'),
+                group='config/alt_measurement_processor',
+                identifier='pinson_altitude',
+                label='alt',
+                channel='/sensor/bmp388/altitude',
+                state_block_labels=('pinson15', 'alt_fogm'),
                 aux_channels=('INERTIAL_PVA',),
                 sensor_config=SensorConfig(
-                    group='config/gp3d_state_modeling',
-                    lever_arm=(-0.50, 0.38, -0.05),
+                    group='config/alt_state_modeling',
+                    lever_arm=(0.0, 0.0, 0.0),
                     orientation=(0.0, 0.0, 0.0, 0.0),
-                    sensor_name='position',
+                    sensor_name='altitude',
                 ),
             ),
         ),
@@ -137,13 +137,10 @@ my_config = [
                 channel_to_correct='/sensor/vn-100/imu',
                 expected_dt_nsec=int(0.01 * 1e9),
             ),
-            TimeBiasConfig(
-                group='config/time_bias',
-                channels_to_correct=(
-                    '/sensor/ublox-ZED-F9T/position',
-                    '/sensor/ublox-ZED-F9T/velocity',
-                ),
-                time_bias=int(0.15 * 1e9),
+            BarometerToAltitudeConfig(
+                group='config/pressure_to_alt',
+                channel='/sensor/bmp388/baro_pressure',
+                alt_sigma=30.0,
             ),
         ),
         max_prop_interval=1.0,
