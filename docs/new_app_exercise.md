@@ -1,3 +1,3 @@
-# Exercise: Make a Unique App with Existing Components
+# Exercise: GPS Position and Altitude App
 
-In this exercise, you must create a new, unique app using existing Cobra components
+In this exercise, you must create a new, unique app using existing Cobra components.
