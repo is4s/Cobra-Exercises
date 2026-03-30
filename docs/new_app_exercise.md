@@ -50,7 +50,13 @@ some metadata on the log.
 Although the change in solution quality should be obvious, we have included some plots below that
 your results should be similar to.
 
-<!-- TODO: add images -->
+```{image} images/new_app_exc_pos_err.png
+:width: 1000px
+```
+
+```{image} images/new_app_exc_vel_err.png
+:width: 1000px
+```
 
 ## Helpful Tips
 
