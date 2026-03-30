@@ -74,9 +74,10 @@ through this exercise.
 ```
 
 ```{dropdown} Where do I find a list of measurement processors?
-A list of available measurement processors can be found
-[here](https://pntos.pages.aspn.us/pntos-python/autodocs/cobra_internal.html#pntos.cobra.internal.StandardGpsInsStateModelProvider).
+A list of available measurement processors can be found in the `StandardStateModelingPlugin` docs
+[on this page](https://pntos.pages.aspn.us/pntos-python/autodocs/cobra_internal.html).
 The corresponding identifier must be located in the source code
+<!-- TODO: Update this link after https://git.aspn.us/pntos/pntos-python/-/merge_requests/385 is merged -->
 [here](https://git.aspn.us/pntos/pntos-python/-/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardGpsInsStateModelingPlugin.py)
 ```
 
