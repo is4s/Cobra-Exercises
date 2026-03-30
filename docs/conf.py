@@ -22,7 +22,9 @@ release = '0.1.0'
 extensions = ['myst_parser', 'sphinx_design']
 
 # Myst settings
-# myst_enable_extensions = []
+myst_enable_extensions = [
+    'dollarmath',  # For inline and block math using $...$
+]
 myst_heading_anchors = 3
 myst_footnote_sort = False
 
