@@ -37,7 +37,6 @@ from pntos.cobra.config import (
     SensorMeasurementProcessorConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
-    TimeBiasConfig,
 )
 from pntos_python_datasets import EXAMPLE_LCM_LOG
 
@@ -166,14 +165,6 @@ my_config = [
                 group='config/time_adjuster',
                 channel_to_correct='/sensor/vn-100/imu',
                 expected_dt_nsec=int(0.01 * 1e9),
-            ),
-            TimeBiasConfig(
-                group='config/time_bias',
-                channels_to_correct=(
-                    '/sensor/ublox-ZED-F9T/position',
-                    '/sensor/ublox-ZED-F9T/velocity',
-                ),
-                time_bias=int(0.15 * 1e9),
             ),
             BarometerToAltitudeConfig(
                 group='config/pressure_to_alt',

@@ -1,34 +1,8 @@
 diff --git a/exercises/new_app_exercise/pos_baro_app.py b/.details/new_app_exc_ans/pos_baro_app.py
-index 2ab7825..109cfc6 100644
+index 6888c62..b939c28 100644
 --- a/exercises/new_app_exercise/pos_baro_app.py
 +++ b/.details/new_app_exc_ans/pos_baro_app.py
-@@ -23,8 +23,8 @@ from pntos.cobra import (
- )
- from pntos.cobra.config import (
-     AspnVersion,
--    ControllerConfig,
-     BarometerToAltitudeConfig,
-+    ControllerConfig,
-     FogmConfig,
-     FogmStateBlockConfig,
-     ImuConfig,
-@@ -37,6 +37,7 @@ from pntos.cobra.config import (
-     SensorMeasurementProcessorConfig,
-     StandardOrchestrationConfig,
-     TimeAdjusterConfig,
-+    TimeBiasConfig,
- )
- from pntos_python_datasets import EXAMPLE_LCM_LOG
- 
-@@ -68,6 +69,7 @@ my_config = [
-         channels_to_process=(
-             '/sensor/vn-100/imu',
-             '/sensor/ublox-ZED-F9T/position',
-+            '/sensor/bmp388/baro_pressure',
-         ),
-     ),
-     ControllerConfig(group='controller'),
-@@ -81,6 +83,20 @@ my_config = [
+@@ -82,6 +82,20 @@ my_config = [
              imu_model=imu_model,
          ),
          additional_sb_configs=(
@@ -49,7 +23,7 @@ index 2ab7825..109cfc6 100644
              FogmStateBlockConfig(
                  group='config/alt_fogm_block',
                  label='alt_fogm',
-@@ -97,6 +113,20 @@ my_config = [
+@@ -98,6 +112,20 @@ my_config = [
              ),
          ),
          mp_configs=(
@@ -70,18 +44,3 @@ index 2ab7825..109cfc6 100644
              SensorMeasurementProcessorConfig(
                  group='config/alt_measurement_processor',
                  identifier='pinson_altitude',
-@@ -137,6 +167,14 @@ my_config = [
-                 channel_to_correct='/sensor/vn-100/imu',
-                 expected_dt_nsec=int(0.01 * 1e9),
-             ),
-+            TimeBiasConfig(
-+                group='config/time_bias',
-+                channels_to_correct=(
-+                    '/sensor/ublox-ZED-F9T/position',
-+                    '/sensor/ublox-ZED-F9T/velocity',
-+                ),
-+                time_bias=int(0.15 * 1e9),
-+            ),
-             BarometerToAltitudeConfig(
-                 group='config/pressure_to_alt',
-                 channel='/sensor/bmp388/baro_pressure',

@@ -23,8 +23,8 @@ from pntos.cobra import (
 )
 from pntos.cobra.config import (
     AspnVersion,
-    ControllerConfig,
     BarometerToAltitudeConfig,
+    ControllerConfig,
     FogmConfig,
     FogmStateBlockConfig,
     ImuConfig,
@@ -68,6 +68,7 @@ my_config = [
         channels_to_process=(
             '/sensor/vn-100/imu',
             '/sensor/ublox-ZED-F9T/position',
+            '/sensor/bmp388/baro_pressure',
         ),
     ),
     ControllerConfig(group='controller'),
