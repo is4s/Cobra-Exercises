@@ -1,13 +1,18 @@
 import numpy as np
 from aspn23 import (
     MeasurementDirection3DToPoints,
-    TypeDirection3DToPointReferenceFrame
+    TypeDirection3DToPointReferenceFrame,
+    MeasurementPositionVelocityAttitude,
+    MeasurementPositionVelocityAttitudeReferenceFrame,
+    TypeRemotePointPositionReferenceFrame
 )
 
-from numpy import float64
+from navtk.gnssutils import calc_sv_azimuth, calc_sv_elevation
+from navtk.navutils import llh_to_ecef, llh_to_cen, quat_to_dcm
+from numpy import asin, cos, float64
 from numpy.typing import NDArray
 from pntos.api import (
-    GenXandP,
+    EstimateWithCovariance,
     LoggingLevel,
     Mediator,
     Message,
@@ -15,13 +20,13 @@ from pntos.api import (
     StandardMeasurementProcessor,
 )
 
-
 class DirectionMeasurementProcessor(StandardMeasurementProcessor):
     """
     TODO
     """
 
     _mediator: Mediator
+    _pva: MeasurementPositionVelocityAttitude | None
 
     def __init__(
         self,
@@ -42,16 +47,18 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         self.state_block_labels = state_block_labels
         self._mediator = mediator
         self._l_ps_p = l_ps_p
+        self._pva = None
 
     def receive_aux_data(self, aux: list[Message | None]) -> None:
-        # TODO Needs pva aux
-        pass
+        # Just keep the latest aux
+        for m in aux:
+            if isinstance(m.wrapped_message, MeasurementPositionVelocityAttitude):
+                self._pva = m.wrapped_message
 
-    # TODO Need to revert away from genxp or wait for cobra dep bump
     def generate_model(
         self,
         message: Message,
-        gen_x_and_p_func: GenXandP,
+        x_and_p: EstimateWithCovariance,
     ) -> StandardMeasurementModel | None:
         """
         TODO
