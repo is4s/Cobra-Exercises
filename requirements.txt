@@ -140,7 +140,7 @@ pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba
     #   pntos-python-exercises
 pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-cobra
     # via pntos-python-exercises
-pntos-python-datasets==0.4.3
+pntos-python-datasets==0.5.0
     # via pntos-python-exercises
 pntos-python-exercises-docs-data==0.4.0
 pygments==2.19.2

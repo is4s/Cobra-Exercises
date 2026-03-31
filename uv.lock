@@ -1406,10 +1406,10 @@ dependencies = [
 
 [[package]]
 name = "pntos-python-datasets"
-version = "0.4.3"
+version = "0.5.0"
 source = { registry = "https://git.aspn.us/api/v4/projects/94/packages/pypi/simple" }
 wheels = [
-    { url = "https://git.aspn.us/api/v4/projects/94/packages/pypi/files/7f36446d078c7590b2a6a7c053965778088cfb28e62ff8e939973dd9eaf38f2a/pntos_python_datasets-0.4.3-py2.py3-none-any.whl", hash = "sha256:7f36446d078c7590b2a6a7c053965778088cfb28e62ff8e939973dd9eaf38f2a" },
+    { url = "https://git.aspn.us/api/v4/projects/94/packages/pypi/files/190b39d851e45bf1409289a48a7485fad801707ca4fcd07e27f5fa5add389079/pntos_python_datasets-0.5.0-py2.py3-none-any.whl", hash = "sha256:190b39d851e45bf1409289a48a7485fad801707ca4fcd07e27f5fa5add389079" },
 ]
 
 [[package]]
@@ -1445,7 +1445,7 @@ requires-dist = [
     { name = "analysis-lcm", git = "ssh://git@git.aspn.us/pntos/analysis-scripts.git?subdirectory=analysis-lcm&rev=6a457e6db086d3325b52a2ec5d379ece2a9c2c64" },
     { name = "pntos-api", git = "ssh://git@git.aspn.us/pntos/pntos-python.git?subdirectory=pntos-api&rev=c52d2718d72a46ad7ba9fefc77c389008fa5bf5f" },
     { name = "pntos-cobra", git = "ssh://git@git.aspn.us/pntos/pntos-python.git?subdirectory=pntos-cobra&rev=c52d2718d72a46ad7ba9fefc77c389008fa5bf5f" },
-    { name = "pntos-python-datasets", specifier = "==0.4.3" },
+    { name = "pntos-python-datasets", specifier = "==0.5.0" },
 ]
 
 [package.metadata.requires-dev]

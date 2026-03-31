@@ -20,7 +20,7 @@ dependencies = [
     'pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-api',
     'pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-cobra',
     # Generated from branch v0.4.3 on 1 December 2025
-    "pntos-python-datasets==0.4.3",
+    "pntos-python-datasets==0.5.0",
 ]
 
 [dependency-groups]
