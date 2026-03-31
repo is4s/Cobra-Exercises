@@ -71,33 +71,85 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             )
             return None
         
-        # Make sure that the state block label(s) that we are generating a model against
-        # exist and have an estimate/covariance in the filter.
-        ewc = gen_x_and_p_func(self.state_block_labels)
-        if ewc is None:
+        meas = message.wrapped_message
+
+        if self._pva is None or self._pva.time_of_validity.elapsed_nsec != meas.time_of_validity.elapsed_nsec:
+            self._mediator.log_message(LoggingLevel.ERROR, "Invalid aux PVA")
             return None
         
-        meas = message.wrapped_message
+        
         # There are multiple formats that the observations can be in. Without a camera model we
         # cannot process REFERENCE_FRAME_PIXEL or REFERENCE_FRAME_NORMALIZED_IMAGE, but 
         # REFERENCE_FRAME_AZ_EL and REFERENCE_FRAME_SINE_SPACE are trivially convertible to one another.
         # The measurement format allows for each observation to have a different reference frame...
         # so we'll need to sweep and harvest only the ones we want.
 
+        keep_obs = []
+        calc_az_el = []
+        keep_cov = []
+
+        if self._pva is None:
+            return None
+        if self._pva.reference_frame != MeasurementPositionVelocityAttitudeReferenceFrame.GEODETIC:
+            return None
+        if self._pva.p1 is None or self._pva.p2 is None or self._pva.p3 is None:
+            return None 
+        self_llh = [self._pva.p1, self._pva.p2, self._pva.p3]
+        self_ecef = llh_to_ecef(self_llh)
+
+        num_obs = len(meas.obs)
+        for k in range(num_obs):
+            if meas.obs[k].remote_point.position_reference_frame == TypeRemotePointPositionReferenceFrame.NONE:
+                continue
+            rp1 = meas.obs[k].remote_point.position1
+            rp2 = meas.obs[k].remote_point.position2 
+            rp3 = meas.obs[k].remote_point.position3
+            
+            if rp1 is None or rp2 is None or rp3 is None:
+                continue
+            
+            if meas.obs[k].reference_frame == TypeDirection3DToPointReferenceFrame.AZ_EL:
+                keep_obs.append(meas.obs[k].obs)
+                keep_cov.append(meas.obs[k].covariance)
+            elif meas.obs[k].reference_frame == TypeDirection3DToPointReferenceFrame.SINE_SPACE:
+                # convert sine space to az-el
+                el = -asin(meas.obs[k].obs[1])
+                az = asin(meas.obs[k].obs[0]/cos(el))
+                keep_obs.append(np.array([az, el]))
+                # TODO convert uncertainty
+                keep_cov.append(meas.obs[k].covariance)
+            else:
+                continue
+            obs_ecef = llh_to_ecef([rp1, rp2, rp3])
+            #calc_az_el.append([calc_sv_azimuth(self_ecef, obs_ecef), calc_sv_elevation(self._pva.p1, self._pva.p2, self_ecef, obs_ecef)])
+            vec_ecef = obs_ecef - self_ecef
+            unit_vec_ecef = vec_ecef/np.linalg.norm(vec_ecef)
+            cen = llh_to_cen(self_llh)
+            unit_vec_ned = cen.T @ unit_vec_ecef
+            cnp = quat_to_dcm(self._pva.quaternion)
+            unit_vec_platform = cnp.T @ unit_vec_ned
+            unit_vec_sensor = np.array([[0, 0, 1], [0, 1, 0], [-1, 0, 0]]) @ (unit_vec_platform + self._l_ps_p)
+            az = np.arctan2(unit_vec_sensor[1], unit_vec_sensor[0])
+            el =  np.asin(np.dot([0, 0, -1], unit_vec_sensor))
+            calc_az_el.append([az, el])
+            print("Measurement comparison")
+            print(f"SV version {calc_az_el[-1]}")
+            print(f"Meas {keep_obs[-1]}\n")
+            print(keep_obs[-1][0] + calc_az_el[-1][0])
+
+        num_obs = len(keep_obs)
         
         # We can pre-allocate our model terms based on the number of observations in the measurement.
-        
-        num_obs = len(meas.obs)
         z = np.zeros((2 * num_obs, 1))
         R = np.zeros((2 * num_obs, 2 * num_obs))
-        H = np.zeros((2 * num_obs, ewc.estimate.shape[0]))
+        H = np.zeros((2 * num_obs, x_and_p.estimate.shape[0]))
 
         for k in range(num_obs):
-            z[:, k] = meas.obs[k].obs
-            R[k:k+2, k:k+2] = meas.obs[k].covariance
+            z[k:k+2, :] = keep_obs[k].reshape((2, 1))
+            R[k:k+2, k:k+2] = keep_cov[k]
 
         def h(x: NDArray[float64]) -> NDArray[float64]:
             # TODO
-            return x
+            return z
         
         return StandardMeasurementModel(z, h, H, R)
