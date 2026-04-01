@@ -2,12 +2,12 @@
 
 This exercise is designed to be a beginner friendly interaction with the `pntos-python` system. We
 recommend you start with this exercise as you should develop a familiarity with apps, which is
-necessary to setup and run an instance of `pntOS`. In this exercise, the app is already setup with
+necessary to setup and run an instance of `pntOS`. In this exercise, the app is already set up with
 the altitude update, so all you must do is add a GPS position update to the stubbed-out app. 
 
 ## Motivation
 
-The easiest way to get motivation for adding a GPS update is to run the app in its starting state
+The easiest way to motivate adding a GPS update is to run the app in its starting state
 and see the results yourself! They are less than sub-optimal and it's clear the solution is useless
 in its current state. Unfortunately, a commercial-grade IMU and barometer can only go so far
 together, so this app is ripe for a geodetic 3D positional update via GPS.
@@ -18,7 +18,7 @@ other cases, the `LcmLogTransportConfig` typically needs to be updated to proces
 but in this case that is not necessary.
 ```
 
-## A Priori Information
+## *A Priori* Information
 
 Incorporating a new measurement typically requires some pertinent information that can only be
 obtained through prior understanding of the data collect or extensive examination of said data.
@@ -29,11 +29,11 @@ information that should be used in adding the GPS position update.
 - There is no rotational offset (orientation) between the sensor and platform frame.
 - All Pinson positional measurement processors require inertial PVA auxiliary data.
 - Our implementation uses a first-order Gauss-Markov (FOGM) to model the `x`, `y`, and `z`
-positional sensor errors.
+time-correlated positional sensor errors.
     - The `3x1` initial estimate are all zeros.
-    - The `3x3` initial covariance is $9 * I_{3x3}$
-    - The `3x1` sigmas are `(1.5, 1.5, 2.0)`
-    - The `3x1` taus are `(300, 300, 200)`
+    - The `3x3` initial covariance is $9 * I_{3\text{x}3}$
+    - The `3x1` $\sigma$'s are `(1.5, 1.5, 2.0)` meters
+    - The `3x1` $\tau$'s are `(300, 300, 200)` seconds
 
 ```{note}
 When using the information above, be sure to provide the information as the expected type specified
@@ -87,7 +87,7 @@ limited. But, we have listed below the most common issues and what they might me
 
 If your results improved significantly but the 1-sigma bounds are vastly different, you likely used
 the `pinson_position` MP and not the `pinson_with_ned_fogm_position`. For all intents and purposes,
-this is a valid solution, but if you would like for it to match, you will have to swap the MP and
+this is a valid solution. But if you would like for it to match, you will have to swap the MP and
 possibly add a FOGM block if you have not already.
 
 If your results didn't improve or are still considerably different, this likely means you aren't
@@ -113,7 +113,7 @@ already in the app), a FOGM block to model the sensor errors, and inertial PVA a
 accomplish the above we:
 
 - Added a `FogmStateBlockConfig` to `StandardOrchestrationConfig.additional_sb_configs` and used
-the relavent information from [](#a-priori-information).
+the relevant information from [](#a-priori-information).
 - Added a `SensorMeasurementProcessorConfig` to `StandardOrchestrationConfig.mp_configs` that
 accomplishes the requirements described above by:
     - processing the `/sensor/ublox-ZED-F9T/position` channel.
