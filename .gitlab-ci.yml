@@ -100,7 +100,8 @@ mypy:
     script:
         - docker run --rm -dit -v $(pwd):/work -v $HOME/.ccache:/root/.cache/uv --name pntos-python -e UV_INDEX=${UV_INDEX} $DOCKER_IMAGE bash
         - docker exec pntos-python uv sync
-        - docker exec pntos-python mypy .
+        - docker exec pntos-python mypy exercises/
+        - docker exec pntos-python mypy .details/
 
 documentation check:
     stage: check
@@ -117,6 +118,15 @@ documentation check:
         - docs/build/index.html  # must be first, expose_as links to the first entry
         - docs/build # ..but all the other files *also* need to be in the archive
 
+Exercise Sync Check:
+    stage: check
+    tags:
+        - linux-light-runner
+    script:
+        - docker run --rm -dit -v $(pwd):/work -v $HOME/.ccache:/root/.cache/uv --name pntos-python -e UV_INDEX=${UV_INDEX} $DOCKER_IMAGE bash
+        - docker exec pntos-python uv sync
+        - docker exec -e TZ=UTC pntos-python util/check_sync.sh
+
 link check:
     stage: check
     tags:
@@ -126,6 +136,26 @@ link check:
         - docker exec pntos-python uv sync
         # Check external links in the documentation
         - docker exec -e TZ=UTC pntos-python sphinx-build -b linkcheck --exception-on-warning docs/ docs/build/
+
+Zupt Stub:
+    stage: run
+    needs: []
+    tags:
+        - linux-light-runner
+    script:
+        - docker run --rm -dit -v $(pwd):/work -v $HOME/.ccache:/root/.cache/uv --name pntos-python -e UV_INDEX=${UV_INDEX} $DOCKER_IMAGE bash
+        - docker exec pntos-python uv sync
+        - docker exec pntos-python pytest test -k test_zupt_stub -s
+
+Zupt Solution:
+    stage: run
+    needs: []
+    tags:
+        - linux-light-runner
+    script:
+        - docker run --rm -dit -v $(pwd):/work -v $HOME/.ccache:/root/.cache/uv --name pntos-python -e UV_INDEX=${UV_INDEX} $DOCKER_IMAGE bash
+        - docker exec pntos-python uv sync
+        - docker exec pntos-python pytest test -k test_zupt_sol -s
 
 pip workflow check:
     stage: run

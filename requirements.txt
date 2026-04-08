@@ -6,6 +6,7 @@ analysis-lcm @ git+ssh://git@git.aspn.us/pntos/analysis-scripts.git@6a457e6db086
     # via
     #   analysis-ros
     #   pntos-cobra
+    #   pntos-python-exercises
 analysis-ros @ git+ssh://git@git.aspn.us/pntos/analysis-scripts.git@6a457e6db086d3325b52a2ec5d379ece2a9c2c64#subdirectory=analysis-ros
     # via pntos-cobra
 aspn2-lcm @ git+ssh://git@git.aspn.us/pntos/lcm-generated.git@831a7727bffab217b3de60491dc12b96b50887a1#subdirectory=python
@@ -29,6 +30,7 @@ charset-normalizer==3.4.6
     # via requests
 colorama==0.4.6 ; sys_platform == 'win32'
     # via
+    #   pytest
     #   sphinx
     #   tqdm
 contourpy==1.3.2 ; python_full_version < '3.11'
@@ -47,6 +49,8 @@ docutils==0.22.4 ; python_full_version >= '3.11'
     #   myst-parser
     #   sphinx
     #   sphinx-rtd-theme
+exceptiongroup==1.3.1 ; python_full_version < '3.11'
+    # via pytest
 fonttools==4.62.1
     # via matplotlib
 h5py==3.16.0
@@ -55,6 +59,8 @@ idna==3.11
     # via requests
 imagesize==2.0.0
     # via sphinx
+iniconfig==2.3.0
+    # via pytest
 inu==1.1.0
     # via analysis-lcm
 jinja2==3.1.6
@@ -119,23 +125,31 @@ numpy==2.4.3 ; python_full_version >= '3.11'
 packaging==26.0
     # via
     #   matplotlib
+    #   pytest
     #   sphinx
 pathspec==1.0.4
     # via mypy
 pillow==12.1.1
     # via matplotlib
 pip==26.0.1
+pluggy==1.6.0
+    # via pytest
 pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-api
     # via
     #   pntos-cobra
     #   pntos-python-exercises
 pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-cobra
     # via pntos-python-exercises
-pntos-python-exercises-docs-data==0.1.0
+pntos-python-datasets==0.4.3
+    # via pntos-python-exercises
+pntos-python-exercises-docs-data==0.4.0
 pygments==2.19.2
-    # via sphinx
+    # via
+    #   pytest
+    #   sphinx
 pyparsing==3.3.2
     # via matplotlib
+pytest==9.0.2
 python-dateutil==2.9.0.post0
     # via matplotlib
 pyyaml==6.0.3
@@ -160,18 +174,23 @@ snowballstemmer==3.0.1
 sphinx==8.1.3 ; python_full_version < '3.11'
     # via
     #   myst-parser
+    #   sphinx-design
     #   sphinx-rtd-theme
     #   sphinxcontrib-jquery
 sphinx==9.0.4 ; python_full_version == '3.11.*'
     # via
     #   myst-parser
+    #   sphinx-design
     #   sphinx-rtd-theme
     #   sphinxcontrib-jquery
 sphinx==9.1.0 ; python_full_version >= '3.12'
     # via
     #   myst-parser
+    #   sphinx-design
     #   sphinx-rtd-theme
     #   sphinxcontrib-jquery
+sphinx-design==0.6.1 ; python_full_version < '3.11'
+sphinx-design==0.7.0 ; python_full_version >= '3.11'
 sphinx-rtd-theme==3.1.0
 sphinxcontrib-applehelp==2.0.0
     # via sphinx
@@ -192,6 +211,7 @@ tabulate==0.10.0
 tomli==2.4.0 ; python_full_version < '3.11'
     # via
     #   mypy
+    #   pytest
     #   sphinx
 tomlkit==0.14.0
     # via analysis-lcm
@@ -200,6 +220,8 @@ tqdm==4.67.3
     #   analysis-lcm
     #   pntos-cobra
 typing-extensions==4.15.0
-    # via mypy
+    # via
+    #   exceptiongroup
+    #   mypy
 urllib3==2.6.3
     # via requests
