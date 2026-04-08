@@ -1,9 +1,9 @@
 # Exercise: GPS Position and Altitude App
 
-This exercise is designed to be a beginner friendly interaction with the `pntos-python` system. We
-recommend you start with this exercise as you should develop a familiarity with apps, which is
-necessary to setup and run an instance of `pntOS`. In this exercise, the app is already set up with
-the altitude update, so all you must do is add a GPS position update to the stubbed-out app. 
+This exercise is designed to be a beginner friendly interaction with the Cobra system. We recommend
+you start with this exercise as you should develop a familiarity with apps, which is necessary to
+setup and run an instance of pntOS-Python. In this exercise, the app is already set up with the
+altitude update, so all you must do is add a GPS position update to the stubbed-out app. 
 
 ## Motivation
 
@@ -77,8 +77,9 @@ through this exercise.
 A list of available measurement processors can be found in the `StandardStateModelingPlugin` docs
 [on this page](https://pntos.pages.aspn.us/pntos-python/autodocs/cobra_internal.html).
 The corresponding identifier must be located in the source code
-<!-- TODO: Update this link after https://git.aspn.us/pntos/pntos-python/-/merge_requests/385 is merged -->
 [here](https://git.aspn.us/pntos/pntos-python/-/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardGpsInsStateModelingPlugin.py)
+<!-- TODO: Update this link after https://git.aspn.us/pntos/pntos-python/-/merge_requests/385 is merged
+     tracked by https://git.aspn.us/pntos/pntos-python-exercises/-/work_items/1 -->
 ```
 
 ```{dropdown} I believe I have added the necessary components, but the results don't look the same.
