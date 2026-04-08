@@ -17,6 +17,6 @@ complexity.
 
 ```{toctree}
 exercise1
+zupt_exercise
 exercise2
-exercise3
 ```
