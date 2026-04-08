@@ -77,9 +77,7 @@ through this exercise.
 A list of available measurement processors can be found in the `StandardStateModelingPlugin` docs
 [on this page](https://pntos.pages.aspn.us/pntos-python/autodocs/cobra_internal.html).
 The corresponding identifier must be located in the source code
-[here](https://git.aspn.us/pntos/pntos-python/-/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardGpsInsStateModelingPlugin.py)
-<!-- TODO: Update this link after https://git.aspn.us/pntos/pntos-python/-/merge_requests/385 is merged
-     tracked by https://git.aspn.us/pntos/pntos-python-exercises/-/work_items/1 -->
+[here](https://git.aspn.us/pntos/pntos-python/-/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
 ```
 
 ```{dropdown} I believe I have added the necessary components, but the results don't look the same.
