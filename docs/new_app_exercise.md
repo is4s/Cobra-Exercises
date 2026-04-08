@@ -9,7 +9,7 @@ altitude update, so all you must do is add a GPS position update to the stubbed-
 
 The easiest way to motivate adding a GPS update is to run the app in its starting state
 and see the results yourself! They are less than sub-optimal and it's clear the solution is useless
-in its current state. Unfortunately, a commercial-grade IMU and barometer can only go so far
+in its current state. Unfortunately, a industrial-grade IMU and barometer can only go so far
 together, so this app is ripe for a geodetic 3D positional update via GPS.
 
 ```{note}
