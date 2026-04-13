@@ -1,3 +1,5 @@
+import array
+
 import numpy as np
 from aspn23 import (
     MeasurementDirection3DToPoints,
@@ -9,7 +11,8 @@ from aspn23 import (
 
 from navtk.gnssutils import calc_sv_azimuth, calc_sv_elevation
 from navtk.navutils import llh_to_ecef, llh_to_cen, quat_to_dcm
-from numpy import asin, cos, float64
+from numpy import asin, cos, float64, sin
+from numpy.linalg import inv
 from numpy.typing import NDArray
 from pntos.api import (
     EstimateWithCovariance,
@@ -19,6 +22,23 @@ from pntos.api import (
     StandardMeasurementModel,
     StandardMeasurementProcessor,
 )
+
+def az_el_to_sin_jac(az: float, el: float)-> NDArray[float64]:
+    return array([[cos(el) * cos(az), -sin(az) * sin(el)], [0, -cos(el)]])
+
+def convert_az_el_to_sine_space(x: NDArray[float64], cov: NDArray[float64])->tuple[NDArray[float64], NDArray[float64]]:
+    az = x[0]
+    el = x[1]
+    x1 =-sin(el)
+    x0 = sin(az) * cos(el)
+    tx = az_el_to_sin_jac(az, el)
+    return (array([x0, x1]), tx @ cov @ tx.T)
+
+def convert_sine_space_to_az_el(x: NDArray[float64], cov: NDArray[float64])->tuple[NDArray[float64], NDArray[float64]]:
+    el = -asin(x[1])
+    az = asin(x[0]/cos(el))
+    tx = inv(az_el_to_sin_jac(az, el))
+    return (array([az, el]), tx @ cov @ tx.T)
 
 class DirectionMeasurementProcessor(StandardMeasurementProcessor):
     """
@@ -113,11 +133,9 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
                 keep_cov.append(meas.obs[k].covariance)
             elif meas.obs[k].reference_frame == TypeDirection3DToPointReferenceFrame.SINE_SPACE:
                 # convert sine space to az-el
-                el = -asin(meas.obs[k].obs[1])
-                az = asin(meas.obs[k].obs[0]/cos(el))
-                keep_obs.append(np.array([az, el]))
-                # TODO convert uncertainty
-                keep_cov.append(meas.obs[k].covariance)
+                (azel, azelcov)  = convert_sine_space_to_az_el(meas.obs[k].obs, meas.obs[k].covariance)
+                keep_obs.append(azel)
+                keep_cov.append(azelcov)
             else:
                 continue
             obs_ecef = llh_to_ecef([rp1, rp2, rp3])
