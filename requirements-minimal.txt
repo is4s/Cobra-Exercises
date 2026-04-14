@@ -44,6 +44,10 @@ lcm==1.5.2
     #   pntos-cobra
 matplotlib==3.10.8
     # via pntos-cobra
+mypy==1.18.2
+    # via pntos-python-exercises
+mypy-extensions==1.1.0
+    # via mypy
 navtk==2.1.0.post3.dev0
     # via pntos-cobra
 numpy==2.2.6 ; python_full_version < '3.11'
@@ -72,6 +76,8 @@ numpy==2.4.3 ; python_full_version >= '3.11'
     #   scipy
 packaging==26.0
     # via matplotlib
+pathspec==1.0.4
+    # via mypy
 pillow==12.1.1
     # via matplotlib
 pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-api
@@ -98,9 +104,13 @@ six==1.17.0
     # via python-dateutil
 tabulate==0.10.0
     # via analysis-lcm
+tomli==2.4.0 ; python_full_version < '3.11'
+    # via mypy
 tomlkit==0.14.0
     # via analysis-lcm
 tqdm==4.67.3
     # via
     #   analysis-lcm
     #   pntos-cobra
+typing-extensions==4.15.0
+    # via mypy
