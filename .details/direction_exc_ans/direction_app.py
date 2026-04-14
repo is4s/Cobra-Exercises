@@ -5,7 +5,7 @@ import sys
 import numpy as np
 
 # API imports
-from pntos.api import EstimateWithCovariance, EstimateWithCovarianceType, LoggingLevel
+from pntos.api import LoggingLevel
 
 # Import Cobra plugins and config structs
 from pntos.cobra import (
@@ -23,23 +23,17 @@ from pntos.cobra import (
 )
 from pntos.cobra.config import (
     AspnVersion,
-    BarometerToAltitudeConfig,
     ControllerConfig,
-    FogmConfig,
-    FogmStateBlockConfig,
     ImuConfig,
     ImuRotatorConfig,
     InertialConfig,
     LcmLogTransportConfig,
     ManualHeadingAlignmentConfig,
-    MeasurementProcessorConfig,
-    OutageConfig,
     PinsonStateBlockConfig,
     SensorConfig,
     SensorMeasurementProcessorConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
-    TimeBiasConfig,
 )
 from direction_plugin import DirectionPlugin
 
@@ -126,14 +120,6 @@ my_config = [
                 group='config/time_adjuster',
                 channel_to_correct='/sensor/vn-100/imu',
                 expected_dt_nsec=int(0.01 * 1e9),
-            ),
-            TimeBiasConfig(
-                group='config/time_bias',
-                channels_to_correct=(
-                    '/sensor/ublox-ZED-F9T/position',
-                    '/sensor/ublox-ZED-F9T/velocity',
-                ),
-                time_bias=int(0.15 * 1e9),
             ),
         ),
         max_prop_interval=1.0,
