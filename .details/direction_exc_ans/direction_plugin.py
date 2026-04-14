@@ -65,6 +65,7 @@ class DirectionModelProvider(StandardStateModelProvider):
                     state_block_labels,
                     self._mediator,
                     np.array(sensor_mp_config.sensor_config.lever_arm),
+                    np.array(sensor_mp_config.sensor_config.orientation),
                 )
             
         self._mediator.log_message(
