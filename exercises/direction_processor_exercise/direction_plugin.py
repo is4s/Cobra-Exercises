@@ -1,15 +1,10 @@
-import numpy as np
-from pntos.api.plugins.common import LoggingLevel, Mediator
+from pntos.api.plugins.common import Mediator
 from pntos.api.plugins.fusion import StandardFusionEngine
 from pntos.api.plugins.state_modeling import (
     StandardStateModelProvider,
     StateModelingPlugin,
     StateModelProviderType,
     StandardMeasurementProcessor,
-)
-from pntos.cobra.config import (
-    SensorMeasurementProcessorConfig,
-    config_from_registry,
 )
 
 

@@ -9,7 +9,7 @@ from aspn23 import (
 )
 
 from navtk.navutils import delta_lat_to_north, delta_lon_to_east, quat_to_dcm, skew
-from numpy import acos, asin, atan2, cos, eye, float64, sin, zeros
+from numpy import asin, atan2, cos, eye, float64, sin, zeros
 from numpy.linalg import inv, norm
 from numpy.typing import NDArray
 from pntos.api import (
@@ -91,7 +91,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
     def receive_aux_data(self, aux: list[Message | None]) -> None:
         # Just keep the latest aux
         for m in aux:
-            if isinstance(m.wrapped_message, MeasurementPositionVelocityAttitude):
+            if m and isinstance(m.wrapped_message, MeasurementPositionVelocityAttitude):
                 self._pva = m.wrapped_message
 
     def generate_model(
@@ -129,8 +129,6 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         keep_obs = []
         keep_cov = []
 
-        if self._pva is None:
-            return None
         if (
             self._pva.reference_frame
             != MeasurementPositionVelocityAttitudeReferenceFrame.GEODETIC
@@ -182,13 +180,22 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             R[2 * k : (2 * k + 2), 2 * k : (2 * k + 2)] = keep_cov[k]
 
         def h(x: NDArray[float64]) -> NDArray[float64]:
+            assert self._pva is not None
+            assert self._pva.quaternion is not None
             out = zeros((2 * num_obs, 1))
             cnp = (eye(3) - skew(x[6:9].flatten())) @ quat_to_dcm(self._pva.quaternion)
             for k in range(num_obs):
+                rp = meas.obs[k].remote_point
+                assert rp.position1 is not None
+                assert rp.position2 is not None
+                assert rp.position3 is not None
+                assert self._pva.p1 is not None
+                assert self._pva.p2 is not None
+                assert self._pva.p3 is not None
                 # Find predicted NED coordinates of observation wrt self
                 n = (
                     delta_lat_to_north(
-                        meas.obs[k].remote_point.position1 - self._pva.p1,
+                        rp.position1 - self._pva.p1,
                         self._pva.p1,
                         self._pva.p3,
                     )
@@ -196,13 +203,13 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
                 )
                 e = (
                     delta_lon_to_east(
-                        meas.obs[k].remote_point.position2 - self._pva.p2,
+                        rp.position2 - self._pva.p2,
                         self._pva.p1,
                         self._pva.p3,
                     )
                     - x[1]
                 )
-                d = self._pva.p3 - meas.obs[k].remote_point.position3 - x[2]
+                d = self._pva.p3 - rp.position3 - x[2]
                 ned = array([n, e, d]) - (cnp @ self._l_ps_p).reshape((3, 1))
                 # Rotate from ned frame into sensor frame
                 xyz = self._C_platform_to_sensor @ cnp.T @ ned

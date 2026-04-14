@@ -2,8 +2,6 @@
 
 import sys
 
-import numpy as np
-
 # API imports
 from pntos.api import LoggingLevel
 
@@ -80,6 +78,7 @@ my_config = [
             label='pinson15',
             imu_model=imu_model,
         ),
+        # Needed to add configuration for the MeasurementProcessor
         mp_configs=(
             SensorMeasurementProcessorConfig(
                 group='config/direction_measurement_processor',

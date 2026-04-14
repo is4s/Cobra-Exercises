@@ -2,8 +2,6 @@
 
 import sys
 
-import numpy as np
-
 # API imports
 from pntos.api import LoggingLevel
 
@@ -30,8 +28,6 @@ from pntos.cobra.config import (
     LcmLogTransportConfig,
     ManualHeadingAlignmentConfig,
     PinsonStateBlockConfig,
-    SensorConfig,
-    SensorMeasurementProcessorConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
 )
