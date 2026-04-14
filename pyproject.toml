@@ -29,7 +29,7 @@ dev = [
     'myst-parser>=4',
     'pip>=24',
     # Generated from commit ce6c78bd72ca4d3f890987f0c13e1d0c12acced3 on 17 March 2026
-    "pntos-python-exercises-docs-data==0.4.0",
+    "pntos-python-exercises-docs-data==0.5.0",
     "pytest>=8.2",
     'ruff==0.13.2',
     'sphinx>=7.3.7',

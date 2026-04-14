@@ -10,10 +10,8 @@ from aspn23 import (
     TypeRemotePointPositionReferenceFrame
 )
 
-from navtk.gnssutils import calc_sv_azimuth, calc_sv_elevation
-from navtk.navutils import delta_lat_to_north, delta_lon_to_east, llh_to_ecef, llh_to_cen, quat_to_dcm, skew
-from navtk.filtering import calc_numerical_jacobian
-from numpy import acos, asin, atan2, cos, eye, float64, pi, sin, zeros
+from navtk.navutils import delta_lat_to_north, delta_lon_to_east, quat_to_dcm, skew
+from numpy import acos, asin, atan2, cos, eye, float64, sin, zeros
 from numpy.linalg import inv, norm
 from numpy.typing import NDArray
 from pntos.api import (
@@ -47,7 +45,7 @@ def boresight_xyz_to_az_el(ned: NDArray[float64])->NDArray[float64]:
     if r < 1e-20:
         return array([0.0, 0.0])
     az = atan2(ned[1], ned[0])
-    el = asin(np.dot([0, 0, -1], ned/r))#pi/2 - acos(ned[2]/r)
+    el = asin(np.dot([0, 0, -1], ned/r))
     return array([az, el])
 
 class DirectionMeasurementProcessor(StandardMeasurementProcessor):
@@ -119,7 +117,6 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         # so we'll need to sweep and harvest only the ones we want.
 
         keep_obs = []
-        calc_az_el = []
         keep_cov = []
 
         if self._pva is None:
@@ -128,8 +125,6 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             return None
         if self._pva.p1 is None or self._pva.p2 is None or self._pva.p3 is None:
             return None 
-        self_llh = [self._pva.p1, self._pva.p2, self._pva.p3]
-        self_ecef = llh_to_ecef(self_llh)
 
         num_obs = len(meas.obs)
         for k in range(num_obs):
@@ -152,23 +147,6 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
                 keep_cov.append(azelcov)
             else:
                 continue
-            # obs_ecef = llh_to_ecef([rp1, rp2, rp3])
-            # #calc_az_el.append([calc_sv_azimuth(self_ecef, obs_ecef), calc_sv_elevation(self._pva.p1, self._pva.p2, self_ecef, obs_ecef)])
-            # vec_ecef = obs_ecef - self_ecef
-            # unit_vec_ecef = vec_ecef/np.linalg.norm(vec_ecef)
-            # cen = llh_to_cen(self_llh)
-            # unit_vec_ned = cen.T @ unit_vec_ecef
-            # cnp = quat_to_dcm(self._pva.quaternion)
-            # unit_vec_platform = cnp.T @ unit_vec_ned
-            # unit_vec_sensor = np.array([[0, 0, 1], [0, 1, 0], [-1, 0, 0]]) @ (unit_vec_platform + self._l_ps_p)
-            # az = np.arctan2(unit_vec_sensor[1], unit_vec_sensor[0])
-            # el =  np.asin(np.dot([0, 0, -1], unit_vec_sensor))
-            # calc_az_el.append([az, el])
-            # print("Measurement comparison")
-            # print(f"SV version {calc_az_el[-1]}")
-            # print(f"Meas {keep_obs[-1]}\n")
-            # print(keep_obs[-1][0] + calc_az_el[-1][0])
-
         num_obs = len(keep_obs)
         
         # We can pre-allocate our model terms based on the number of observations in the measurement.
@@ -188,26 +166,17 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
                 n = delta_lat_to_north(meas.obs[k].remote_point.position1 - self._pva.p1, self._pva.p1, self._pva.p3) - x[0]
                 e = delta_lon_to_east(meas.obs[k].remote_point.position2 - self._pva.p2, self._pva.p1, self._pva.p3) - x[1]
                 d = self._pva.p3 -  meas.obs[k].remote_point.position3 - x[2]
-                ned = array([n, e, d])
-                
+                ned = array([n, e, d]) - (cnp @ self._l_ps_p).reshape((3, 1))
                 # Rotate from ned frame into sensor frame
-                #xyz = self._C_platform_to_sensor @ cnp.T @ ned
-                xyz = np.array([[0, 0, 1], [0, 1, 0], [-1, 0, 0]]) @ cnp.T @ ned
+                xyz = self._C_platform_to_sensor @ cnp.T @ ned
                 out[2 * k:(2 * k + 2), :] = boresight_xyz_to_az_el(xyz).reshape((2, 1))
             return out
 
         H = zeros((2 * num_obs, x_and_p.estimate.shape[0]))
 
-
-
-        predicted = h(x_and_p.estimate)
-        # print("Predicted")
-        # print(predicted)
-        # print("Measured")
-        # print(z)
-        # exit()
+        # Calculate jacobian numerically for now
         for k in range(x_and_p.estimate.shape[0]):
-            dx = zeros((x_and_p.estimate.shape[0]))
+            dx = zeros((x_and_p.estimate.shape[0], 1))
             dx[k] = 1e-6
             jac_col = ((h(dx) - h(-dx))/(2e-6))
             H[:, k] = jac_col.flatten()

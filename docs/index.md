@@ -18,5 +18,5 @@ complexity.
 ```{toctree}
 new_app_exercise
 zupt_exercise
-exercise2
+direction_app_exercise
 ```
