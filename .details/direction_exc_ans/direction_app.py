@@ -73,8 +73,6 @@ my_config = [
         channels_to_process=(
             '/sensor/vn-100/imu',
             '/sensor/ublox-ZED-F9T/position',
-            '/sensor/bmp388/baro_pressure',
-            '/sensor/ublox-ZED-F9T/velocity',
             '/sensor/simulated/directiontoknownfeature'
         ),
     ),
@@ -88,73 +86,7 @@ my_config = [
             label='pinson15',
             imu_model=imu_model,
         ),
-        additional_sb_configs=(
-            FogmStateBlockConfig(
-                group='config/pos_fogm_block',
-                label='pos_sensor_error',
-                estimate_with_covariance=EstimateWithCovariance(
-                    type=EstimateWithCovarianceType.EWC_GENERIC,
-                    estimate=np.zeros((3,)),
-                    covariance=(np.eye(3) * 9.0),
-                ),
-                fogm_model=FogmConfig(
-                    group='config/pos_sensor_error',
-                    sigma=(1.5, 1.5, 2.0),
-                    tau=(300.0, 300.0, 200.0),
-                ),
-            ),
-            FogmStateBlockConfig(
-                group='config/alt_fogm_block',
-                label='alt_fogm',
-                estimate_with_covariance=EstimateWithCovariance(
-                    type=EstimateWithCovarianceType.EWC_GENERIC,
-                    estimate=np.zeros((1,)),
-                    covariance=(np.array([[100.0**2]])),
-                ),
-                fogm_model=FogmConfig(
-                    group='config/alt_sensor_error',
-                    sigma=(100.0,),
-                    tau=(3600.0,),
-                ),
-            ),
-        ),
         mp_configs=(
-            SensorMeasurementProcessorConfig(
-                group='config/gps_measurement_processor',
-                identifier='pinson_with_ned_fogm_position',
-                label='gps',
-                channel='/sensor/ublox-ZED-F9T/position',
-                state_block_labels=('pinson15', 'pos_sensor_error'),
-                aux_channels=('INERTIAL_PVA',),
-                sensor_config=SensorConfig(
-                    group='config/gp3d_state_modeling',
-                    lever_arm=(-0.50, 0.38, -0.05),
-                    orientation=(0.0, 0.0, 0.0, 0.0),
-                    sensor_name='position',
-                ),
-            ),
-            SensorMeasurementProcessorConfig(
-                group='config/alt_measurement_processor',
-                identifier='pinson_altitude',
-                label='alt',
-                channel='/sensor/bmp388/altitude',
-                state_block_labels=('pinson15', 'alt_fogm'),
-                aux_channels=('INERTIAL_PVA',),
-                sensor_config=SensorConfig(
-                    group='config/alt_state_modeling',
-                    lever_arm=(0.0, 0.0, 0.0),
-                    orientation=(0.0, 0.0, 0.0, 0.0),
-                    sensor_name='altitude',
-                ),
-            ),
-            MeasurementProcessorConfig(
-                group='config/vel_measurement_processor',
-                identifier='pinson_velocity',
-                label='vel',
-                channel='/preproc/simulated/zupt',
-                state_block_labels=('pinson15',),
-                aux_channels=('INERTIAL_PVA',),
-            ),
            SensorMeasurementProcessorConfig(
                 group='config/direction_measurement_processor',
                 identifier='pinson_direction_processor',
@@ -163,10 +95,10 @@ my_config = [
                 state_block_labels=('pinson15',),
                 aux_channels=('INERTIAL_PVA',),
                 sensor_config=SensorConfig(
-                    group='config/alt_state_modeling',
-                    lever_arm=(0.0, 0.0, 0.0),
-                    orientation=(0.0, 0.0, 0.0, 0.0),
-                    sensor_name='altitude',
+                    group='config/direction_state_modeling',
+                    lever_arm=(0.80, 0.0, 0.05),
+                    orientation=(0.707106781, 0.0, 0.707106781, 0.0),
+                    sensor_name='direction',
                 ),
             ),
         ),
@@ -202,17 +134,6 @@ my_config = [
                     '/sensor/ublox-ZED-F9T/velocity',
                 ),
                 time_bias=int(0.15 * 1e9),
-            ),
-            OutageConfig(
-                group='config/gps_outage',
-                channel='/sensor/ublox-ZED-F9T/position',
-                start_time=1000.0,
-                end_time=1600.0,
-            ),
-            BarometerToAltitudeConfig(
-                group='config/pressure_to_alt',
-                channel='/sensor/bmp388/baro_pressure',
-                alt_sigma=30.0,
             ),
         ),
         max_prop_interval=1.0,
