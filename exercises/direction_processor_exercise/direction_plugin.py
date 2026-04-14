@@ -5,7 +5,7 @@ from pntos.api.plugins.state_modeling import (
     StandardStateModelProvider,
     StateModelingPlugin,
     StateModelProviderType,
-    StandardMeasurementProcessor
+    StandardMeasurementProcessor,
 )
 from pntos.cobra.config import (
     SensorMeasurementProcessorConfig,
@@ -14,7 +14,6 @@ from pntos.cobra.config import (
 
 
 class DirectionModelProvider(StandardStateModelProvider):
-
     _mediator: Mediator
 
     def __init__(self, mediator: Mediator) -> None:
@@ -30,10 +29,10 @@ class DirectionModelProvider(StandardStateModelProvider):
         label: str,
         state_block_labels: list[str],
         config_group: str | None,
-    ) -> (
-        StandardMeasurementProcessor | None
-    ):
-        raise NotImplementedError("This StateModelProvider should supply at least one MeasurementProcessor.")
+    ) -> StandardMeasurementProcessor | None:
+        raise NotImplementedError(
+            'This StateModelProvider should supply at least one MeasurementProcessor.'
+        )
 
     def new_block(
         self,
@@ -74,7 +73,9 @@ class DirectionPlugin(StateModelingPlugin):
     def new_state_model_provider(
         self, type: type[StateModelProviderType]
     ) -> StateModelProviderType | None:
-        raise NotImplementedError("This plugin currently does not produce any StateModelProviders.")
+        raise NotImplementedError(
+            'This plugin currently does not produce any StateModelProviders.'
+        )
 
     def is_fusion_type_supported(self, type: StateModelProviderType) -> bool:
         return type is StandardStateModelProvider

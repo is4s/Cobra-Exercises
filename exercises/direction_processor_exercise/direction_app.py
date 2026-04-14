@@ -67,7 +67,7 @@ my_config = [
         channels_to_process=(
             '/sensor/vn-100/imu',
             '/sensor/ublox-ZED-F9T/position',
-            '/sensor/simulated/directiontoknownfeature'
+            '/sensor/simulated/directiontoknownfeature',
         ),
     ),
     ControllerConfig(group='controller'),
@@ -80,7 +80,7 @@ my_config = [
             label='pinson15',
             imu_model=imu_model,
         ),
-        mp_configs=(), # <- Need something here
+        mp_configs=(),  # <- Need something here
         inertial_config=InertialConfig(
             group='config/inertial',
             expected_dt=0.01,

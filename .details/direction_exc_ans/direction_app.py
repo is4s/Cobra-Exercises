@@ -67,7 +67,7 @@ my_config = [
         channels_to_process=(
             '/sensor/vn-100/imu',
             '/sensor/ublox-ZED-F9T/position',
-            '/sensor/simulated/directiontoknownfeature'
+            '/sensor/simulated/directiontoknownfeature',
         ),
     ),
     ControllerConfig(group='controller'),
@@ -81,7 +81,7 @@ my_config = [
             imu_model=imu_model,
         ),
         mp_configs=(
-           SensorMeasurementProcessorConfig(
+            SensorMeasurementProcessorConfig(
                 group='config/direction_measurement_processor',
                 identifier='pinson_direction_processor',
                 label='direction',

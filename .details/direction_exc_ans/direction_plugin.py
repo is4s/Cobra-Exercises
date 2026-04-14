@@ -37,9 +37,7 @@ class DirectionModelProvider(StandardStateModelProvider):
         label: str,
         state_block_labels: list[str],
         config_group: str | None,
-    ) -> (
-        DirectionMeasurementProcessor | None
-    ):
+    ) -> DirectionMeasurementProcessor | None:
         """
         TODO
         """
@@ -67,7 +65,7 @@ class DirectionModelProvider(StandardStateModelProvider):
                     np.array(sensor_mp_config.sensor_config.lever_arm),
                     np.array(sensor_mp_config.sensor_config.orientation),
                 )
-            
+
         self._mediator.log_message(
             LoggingLevel.ERROR,
             f'Invalid processor index of {processor_index}. DirectionModelProvider provides {len(self.processor_identifiers)} processors.',
