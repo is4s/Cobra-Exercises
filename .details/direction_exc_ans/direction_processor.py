@@ -26,17 +26,6 @@ def az_el_to_sin_jac(az: float, el: float) -> NDArray[float64]:
     return array([[cos(el) * cos(az), -sin(az) * sin(el)], [0, -cos(el)]])
 
 
-def convert_az_el_to_sine_space(
-    x: NDArray[float64], cov: NDArray[float64]
-) -> tuple[NDArray[float64], NDArray[float64]]:
-    az = x[0]
-    el = x[1]
-    x1 = -sin(el)
-    x0 = sin(az) * cos(el)
-    tx = az_el_to_sin_jac(az, el)
-    return (array([x0, x1]), tx @ cov @ tx.T)
-
-
 def convert_sine_space_to_az_el(
     x: NDArray[float64], cov: NDArray[float64]
 ) -> tuple[NDArray[float64], NDArray[float64]]:
