@@ -9,7 +9,7 @@ from aspn23 import (
 )
 
 from navtk.navutils import delta_lat_to_north, delta_lon_to_east, quat_to_dcm, skew
-from numpy import asin, atan2, cos, eye, float64, sin, zeros
+from numpy import asin, atan2, cos, eye, float64, sin, zeros, asarray
 from numpy.linalg import inv, norm
 from numpy.typing import NDArray
 from pntos.api import (
@@ -86,7 +86,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         self._mediator = mediator
         self._l_ps_p = l_ps_p
         self._pva = None
-        self._C_platform_to_sensor = quat_to_dcm(C_platform_to_sensor)
+        self._C_platform_to_sensor = quat_to_dcm(asarray(C_platform_to_sensor))
 
     def receive_aux_data(self, aux: list[Message | None]) -> None:
         # Just keep the latest aux
