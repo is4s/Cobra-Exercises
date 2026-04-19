@@ -15,14 +15,9 @@ from direction_processor import DirectionMeasurementProcessor
 
 
 class DirectionModelProvider(StandardStateModelProvider):
-    """TODO"""
-
     _mediator: Mediator
 
     def __init__(self, mediator: Mediator) -> None:
-        """
-        TODO
-        """
         self._mediator = mediator
         self.processor_identifiers: list[str] = [
             'pinson_direction_processor',
@@ -39,7 +34,15 @@ class DirectionModelProvider(StandardStateModelProvider):
         config_group: str | None,
     ) -> DirectionMeasurementProcessor | None:
         """
-        TODO
+        Generates DirectionMeasurementProcessors.
+
+        Args:
+            processor_index: Index of entry in processor_identifiers to generate. If not 0,
+                no processor will be produced.
+            engine: Fusion engine this processor will be added to. Unused.
+            label: The ID used for this processor instance.
+            state_block_labels: The set of state blocks the processor will be used to update.
+            config_group: Group identifier used to access the configuration for this processor in the registry.
         """
         match processor_index:
             case 0:
@@ -80,7 +83,7 @@ class DirectionModelProvider(StandardStateModelProvider):
         config_group: str | None,
     ) -> None:
         """
-        TODO
+        Does not produce any state blocks.
         """
         return None
 
@@ -92,14 +95,12 @@ class DirectionModelProvider(StandardStateModelProvider):
         config_group: str | None,
     ) -> None:
         """
-        TODO
+        Does not produce any virtual state blocks.
         """
         return None
 
 
 class DirectionPlugin(StateModelingPlugin):
-    """TODO"""
-
     _mediator: Mediator
 
     def __init__(self, identifier: str) -> None:
