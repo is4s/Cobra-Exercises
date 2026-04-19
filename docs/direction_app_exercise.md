@@ -55,7 +55,7 @@ a processor that does nothing first, and then fill in the math in the processor 
 takes a state vector and produces *predicted* measurements. In order to do this, you need to
 understand the states you are bringing in, and the contents of the measurements.  
 Have a look at the documentation for the [the python measurement class](https://git.aspn.us/pntos/firehose-outputs/-/blob/main/aspn-py/src/aspn23/measurement_direction_3d_to_points.py?ref_type=heads). Notice that the actual observations are a
-list of a [nested type]s(https://git.aspn.us/pntos/firehose-outputs/-/blob/main/aspn-py/src/aspn23/type_direction_3d_to_point.py?ref_type=heads).
+list of a [nested types](https://git.aspn.us/pntos/firehose-outputs/-/blob/main/aspn-py/src/aspn23/type_direction_3d_to_point.py?ref_type=heads).
 You'll need to pay attention what `reference_frame` you are dealing with.
 
 - If you are using the 'pinson' state block as in the other exercises, your processor *will* need
