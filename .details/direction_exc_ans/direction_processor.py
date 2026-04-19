@@ -252,51 +252,49 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             z[2 * k : (2 * k + 2), :] = keep_obs[k].reshape((2, 1))
             R[2 * k : (2 * k + 2), 2 * k : (2 * k + 2)] = keep_cov[k]
 
+        def calculate_boresight_arg(
+            x: NDArray[float64],
+            cnp: NDArray[float64],
+            rp: NDArray[float64],
+            pva: NDArray[float64],
+        ) -> NDArray[float64]:
+            # Find predicted NED coordinates of observation wrt self, correcting the nominal
+            # with the error states
+            n = delta_lat_to_north(rp[0] - pva[0], pva[0], pva[2]) - x[0]
+            e = delta_lon_to_east(rp[1] - pva[1], pva[0], pva[2]) - x[1]
+            d = pva[2] - rp[2] - x[2]
+            # Subtract off the lever arm in the NED frame to get the vector from the
+            # sensor to the observation location
+            ned = array([n, e, d]) - (cnp @ self._l_ps_p).reshape((3, 1))
+            # Rotate from ned frame into sensor frame i.e. boresight
+            return self._C_platform_to_sensor @ cnp.T @ ned
+
         # Define the non-linear measurement function that predicts the azimuth and elevation
         # of each observed feature given nominal observer position, the feature position, the
         # error state estimates, and the lever arm and rotation from the platform to the
         # sensor that made the observations.
         def h(x: NDArray[float64]) -> NDArray[float64]:
+            # All of these were checked earlier, but typechecking insists it be done again.
+            # Since we know these are safe, just use asserts.
             assert self._pva is not None
             assert self._pva.quaternion is not None
-            out = zeros((2 * num_obs, 1))
+            assert self._pva.p1 is not None
+            assert self._pva.p2 is not None
+            assert self._pva.p3 is not None
+            pva = array([self._pva.p1, self._pva.p2, self._pva.p3])
             # First-order correction of the nominal platform to NED rotation with current tilt
             # error estimates
             cnp = (eye(3) - skew(x[6:9].flatten())) @ quat_to_dcm(self._pva.quaternion)
+
+            out = zeros((2 * num_obs, 1))
             for k in range(num_obs):
                 rp = meas.obs[k].remote_point
-                # All of these were checked earlier, but typechecking insists it be done again.
-                # Since we know these are safe, just use asserts.
                 assert rp.position1 is not None
                 assert rp.position2 is not None
                 assert rp.position3 is not None
-                assert self._pva.p1 is not None
-                assert self._pva.p2 is not None
-                assert self._pva.p3 is not None
-                # Find predicted NED coordinates of observation wrt self, correcting the nominal
-                # with the error states
-                n = (
-                    delta_lat_to_north(
-                        rp.position1 - self._pva.p1,
-                        self._pva.p1,
-                        self._pva.p3,
-                    )
-                    - x[0]
-                )
-                e = (
-                    delta_lon_to_east(
-                        rp.position2 - self._pva.p2,
-                        self._pva.p1,
-                        self._pva.p3,
-                    )
-                    - x[1]
-                )
-                d = self._pva.p3 - rp.position3 - x[2]
-                # Subtract off the lever arm in the NED frame to get the vector from the
-                # sensor to the observation location
-                ned = array([n, e, d]) - (cnp @ self._l_ps_p).reshape((3, 1))
-                # Rotate from ned frame into sensor frame i.e. boresight
-                xyz = self._C_platform_to_sensor @ cnp.T @ ned
+                feature_pos = array([rp.position1, rp.position2, rp.position3])
+
+                xyz = calculate_boresight_arg(x, cnp, feature_pos, pva)
                 # Convert the position vector to an azimuth/elevation and assign
                 out[2 * k : (2 * k + 2), :] = boresight_xyz_to_az_el(xyz).reshape(
                     (2, 1)
