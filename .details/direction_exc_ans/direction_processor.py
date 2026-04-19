@@ -7,7 +7,19 @@ from aspn23 import (
 )
 
 from navtk.navutils import delta_lat_to_north, delta_lon_to_east, quat_to_dcm, skew
-from numpy import asin, atan2, cos, eye, float64, sin, zeros, asarray, array, copy, dot
+from numpy import (
+    asin,
+    atan2,
+    cos,
+    eye,
+    float64,
+    sin,
+    sqrt,
+    zeros,
+    asarray,
+    array,
+    dot,
+)
 from numpy.linalg import inv, norm
 from numpy.typing import NDArray
 from pntos.api import (
@@ -76,6 +88,101 @@ def boresight_xyz_to_az_el(dp: NDArray[float64]) -> NDArray[float64]:
     az = atan2(dp[1], dp[0])
     el = asin(dot([0, 0, -1], dp / r))
     return array([az, el])
+
+
+def boresight_xyz_to_az_el_jacobian(dp: NDArray[float64]) -> NDArray[float64]:
+    """
+    Jacobian of boresight_xyz_to_az_el().
+
+    Args:
+        dp: 3-element position vector originating at the sensor frame origin to some feature,
+            in the sensor frame.
+    Return:
+        2x3 Jacobian w.r.t. dp.
+
+    """
+    x = dp[0]
+    y = dp[1]
+    z = dp[2]
+    x2 = x * x
+    y2 = y * y
+    jac = zeros((2, 3))
+    # Azimuth only depends on x and y
+    d_az = x2 + y2
+    jac[0, 0] = -y / d_az
+    jac[0, 1] = x / d_az
+
+    # Elevation
+    r = norm(dp)
+    r2 = r * r
+    d_el = sqrt(d_az) * r2
+    jac[1, 0] = z * x / d_el
+    jac[1, 1] = z * y / d_el
+    jac[1, 2] = (-x2 - y2) / d_el
+    return jac
+
+
+def calculate_boresight_arg(
+    x: NDArray[float64],
+    cnp_hat: NDArray[float64],
+    rp: NDArray[float64],
+    pos: NDArray[float64],
+    l_ps_p: NDArray[float64],
+    csp: NDArray[float64],
+) -> NDArray[float64]:
+    """
+    Calculates the position of a feature in the sensor frame.
+
+    Args:
+        x: Pinson error state vector.
+        cnp_hat: Nominal platform to NED frame DCM.
+        rp: Remote point, 3-element feature position in geodetic frame, lat (rad), lon (rad), alt (m).
+        pos: Nominal platform origin position, same frame/units as rp.
+        l_ps_p: Lever arm from platform to sensor in platform frame, meters.
+        csp: Platform to sensor orientation.
+    Return:
+        3-vector feature position in sensor frame with corrections from x applied, in meters.
+    """
+    # Find predicted NED coordinates of observation wrt self, correcting the nominal
+    # with the error states
+    cnp = (eye(3) - skew(x[6:9].flatten())) @ cnp_hat
+    n = delta_lat_to_north(rp[0] - pos[0], pos[0], pos[2]) - x[0]
+    e = delta_lon_to_east(rp[1] - pos[1], pos[0], pos[2]) - x[1]
+    d = pos[2] - rp[2] - x[2]
+    # Subtract off the lever arm in the NED frame to get the vector from the
+    # sensor to the observation location
+    ned = array([n, e, d]) - (cnp @ l_ps_p).reshape((3, 1))
+    # Rotate from ned frame into sensor frame i.e. boresight
+    return asarray(csp @ cnp.T @ ned)
+
+
+def calculate_boresight_arg_jacobian(
+    x: NDArray[float64],
+    cnp: NDArray[float64],
+    rp: NDArray[float64],
+    pos: NDArray[float64],
+    csp: NDArray[float64],
+) -> NDArray[float64]:
+    """
+    Jacobian of calculate_boresight_arg.
+
+    Args:
+        x: Pinson error state vector.
+        cnp_hat: Nominal platform to NED frame DCM.
+        rp: Remote point, 3-element feature position in geodetic frame, lat (rad), lon (rad), alt (m).
+        pos: Nominal platform origin position, same frame/units as rp.
+        csp: Platform to sensor orientation.
+    Return:
+        3xn Jacobian w.r.t x.
+    """
+    n = delta_lat_to_north(rp[0] - pos[0], pos[0], pos[2]) - x[0]
+    e = delta_lon_to_east(rp[1] - pos[1], pos[0], pos[2]) - x[1]
+    d = pos[2] - rp[2] - x[2]
+    ned = array([n, e, d])
+    jac = zeros((3, x.shape[0]))
+    jac[:, 0:3] = -csp @ cnp.T
+    jac[:, 6:9] = jac[:, 0:3] @ skew(ned.flatten())
+    return jac
 
 
 class DirectionMeasurementProcessor(StandardMeasurementProcessor):
@@ -184,7 +291,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
 
         meas = message.wrapped_message
 
-        # Verify aux PVA exists, is at the correct time, and has valid position data.
+        # Verify aux PVA exists, is at the correct time, and has valid position and orientation data.
         if (
             self._pva is None
             or self._pva.time_of_validity.elapsed_nsec
@@ -194,6 +301,9 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             return None
 
         if self._pva.p1 is None or self._pva.p2 is None or self._pva.p3 is None:
+            return None
+
+        if self._pva.quaternion is None:
             return None
 
         # There are multiple formats that the observations can be in. Without a camera model we
@@ -254,22 +364,12 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             z[2 * k : (2 * k + 2), :] = keep_obs[k].reshape((2, 1))
             R[2 * k : (2 * k + 2), 2 * k : (2 * k + 2)] = keep_cov[k]
 
-        def calculate_boresight_arg(
-            x: NDArray[float64],
-            cnp: NDArray[float64],
-            rp: NDArray[float64],
-            pva: NDArray[float64],
-        ) -> NDArray[float64]:
-            # Find predicted NED coordinates of observation wrt self, correcting the nominal
-            # with the error states
-            n = delta_lat_to_north(rp[0] - pva[0], pva[0], pva[2]) - x[0]
-            e = delta_lon_to_east(rp[1] - pva[1], pva[0], pva[2]) - x[1]
-            d = pva[2] - rp[2] - x[2]
-            # Subtract off the lever arm in the NED frame to get the vector from the
-            # sensor to the observation location
-            ned = array([n, e, d]) - (cnp @ self._l_ps_p).reshape((3, 1))
-            # Rotate from ned frame into sensor frame i.e. boresight
-            return self._C_platform_to_sensor @ cnp.T @ ned
+        # All of these were checked earlier, but typechecking insists it be done again.
+        # Since we know these are safe, just use asserts.
+        pos = array([self._pva.p1, self._pva.p2, self._pva.p3])
+        cnp = (eye(3) - skew(x_and_p.estimate[6:9].flatten())) @ quat_to_dcm(
+            self._pva.quaternion
+        )
 
         # Define the non-linear measurement function that predicts the azimuth and elevation
         # of each observed feature given nominal observer position, the feature position, the
@@ -283,7 +383,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             assert self._pva.p1 is not None
             assert self._pva.p2 is not None
             assert self._pva.p3 is not None
-            pva = array([self._pva.p1, self._pva.p2, self._pva.p3])
+            pos = array([self._pva.p1, self._pva.p2, self._pva.p3])
             # First-order correction of the nominal platform to NED rotation with current tilt
             # error estimates
             cnp = (eye(3) - skew(x[6:9].flatten())) @ quat_to_dcm(self._pva.quaternion)
@@ -296,7 +396,9 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
                 assert rp.position3 is not None
                 feature_pos = array([rp.position1, rp.position2, rp.position3])
 
-                xyz = calculate_boresight_arg(x, cnp, feature_pos, pva)
+                xyz = calculate_boresight_arg(
+                    x, cnp, feature_pos, pos, self._l_ps_p, self._C_platform_to_sensor
+                )
                 # Convert the position vector to an azimuth/elevation and assign
                 out[2 * k : (2 * k + 2), :] = boresight_xyz_to_az_el(xyz).reshape(
                     (2, 1)
@@ -308,16 +410,37 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         # all state blocks that contain the required states in the correct locations (in this case
         # position errors in [0:3] and attitude errors in [6:9]) to be used with the same processor.
         H = zeros((2 * num_obs, x_and_p.estimate.shape[0]))
+        for k in range(num_obs):
+            rp = meas.obs[k].remote_point
+            assert rp.position1 is not None
+            assert rp.position2 is not None
+            assert rp.position3 is not None
+            feature_pos = array([rp.position1, rp.position2, rp.position3])
+            xyz = calculate_boresight_arg(
+                x_and_p.estimate,
+                cnp,
+                feature_pos,
+                pos,
+                self._l_ps_p,
+                self._C_platform_to_sensor,
+            )
+            j1 = boresight_xyz_to_az_el_jacobian(xyz)
+            j2 = calculate_boresight_arg_jacobian(
+                x_and_p.estimate, cnp, feature_pos, pos, self._C_platform_to_sensor
+            )
+            H[2 * k : (2 * k + 2), :] = j1 @ j2
 
-        # The non-linear measurement function is fairly involved, one way to get the jacobian is
-        # numerically
-        delta = 1e-6
-        for k in range(x_and_p.estimate.shape[0]):
-            dx_high = copy(x_and_p.estimate)
-            dx_low = copy(x_and_p.estimate)
-            dx_high[k] += delta
-            dx_low[k] -= delta
-            jac_col = (h(dx_high) - h(dx_low)) / (2 * delta)
-            H[:, k] = jac_col.flatten()
+        # Another way to get the jacobian is numerically. Based on h() we know that the function is
+        # only dependent on position and tilt states, so we only need to calculate for those columns.
+        # Note that delta usually must be adjusted for the state units, but 1e-6 happens to work
+        # well for pos and attitude in this case.
+        # delta = 1e-6
+        # for k in [0, 1, 2, 6, 7, 8]:
+        #     dx_high = copy(x_and_p.estimate)
+        #     dx_low = copy(x_and_p.estimate)
+        #     dx_high[k] += delta
+        #     dx_low[k] -= delta
+        #     jac_col = (h(dx_high) - h(dx_low)) / (2 * delta)
+        #     H[:, k] = jac_col.flatten()
 
         return StandardMeasurementModel(z, h, H, R)
