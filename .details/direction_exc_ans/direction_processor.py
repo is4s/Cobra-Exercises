@@ -69,6 +69,8 @@ def boresight_xyz_to_az_el(dp: NDArray[float64]) -> NDArray[float64]:
         the x-y plane has a positive elevation).
     """
     r = norm(dp)
+    # Very small r indicates feature and sensor are effectively co-located. It's probably not a good
+    # idea to use it in a fusion update.
     if r < 1e-20:
         return array([0.0, 0.0])
     az = atan2(dp[1], dp[0])
