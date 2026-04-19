@@ -145,8 +145,7 @@ def calculate_boresight_arg(
     """
     # Find predicted NED coordinates of observation wrt self, correcting the nominal
     # with the error states
-    tilts = x[6:9, 0]
-    cnp = (eye(3) - tilts) @ cnp_hat
+    cnp = (eye(3) - skew(x[6:9, 0])) @ cnp_hat  # type: ignore [arg-type]
     n = delta_lat_to_north(rp[0] - pos[0], pos[0], pos[2]) - x[0]
     e = delta_lon_to_east(rp[1] - pos[1], pos[0], pos[2]) - x[1]
     d = pos[2] - rp[2] - x[2]
@@ -182,7 +181,7 @@ def calculate_boresight_arg_jacobian(
     ned: NDArray[float64] = array([n, e, d])
     jac = zeros((3, x.shape[0]))
     jac[:, 0:3] = -csp @ cnp.T
-    jac[:, 6:9] = jac[:, 0:3] @ skew(ned)
+    jac[:, 6:9] = jac[:, 0:3] @ skew(ned)  # type: ignore [arg-type]
     return jac
 
 
@@ -228,7 +227,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         self._mediator = mediator
         self._l_ps_p = l_ps_p
         self._pva = None
-        self._C_platform_to_sensor = quat_to_dcm(C_platform_to_sensor)
+        self._C_platform_to_sensor = quat_to_dcm(C_platform_to_sensor)  # type: ignore [arg-type, assignment]
 
     def receive_aux_data(self, aux: list[Message | None]) -> None:
         """
@@ -368,8 +367,9 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         # All of these were checked earlier, but typechecking insists it be done again.
         # Since we know these are safe, just use asserts.
         pos = array([self._pva.p1, self._pva.p2, self._pva.p3])
-        tilts = x_and_p.estimate[6:9, 0]
-        cnp = (eye(3) - skew(tilts)) @ quat_to_dcm(self._pva.quaternion)
+        cnp = (eye(3) - skew(x_and_p.estimate[6:9, 0])) @ quat_to_dcm(  # type: ignore [arg-type]
+            self._pva.quaternion  # type: ignore [arg-type]
+        )
 
         # Define the non-linear measurement function that predicts the azimuth and elevation
         # of each observed feature given nominal observer position, the feature position, the
@@ -386,9 +386,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             pos = array([self._pva.p1, self._pva.p2, self._pva.p3])
             # First-order correction of the nominal platform to NED rotation with current tilt
             # error estimates
-            tilts = x[6:9, 0]
-            q: NDArray[float64] = self._pva.quaternion
-            cnp = (eye(3) - skew(tilts)) @ quat_to_dcm(q)
+            cnp = (eye(3) - skew(x[6:9, 0])) @ quat_to_dcm(self._pva.quaternion)  # type: ignore [arg-type]
 
             out = zeros((2 * num_obs, 1))
             for k in range(num_obs):
