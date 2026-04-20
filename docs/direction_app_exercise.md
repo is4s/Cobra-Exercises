@@ -10,7 +10,7 @@ implement the processor.
 Many of the measurement processors in `cobra` and features added in prior exercises are pretty basic
 from a sensor modeling standpoint. Most incorporate a direct measurement of some platform parameter,
 such as position or velocity. This exercise guides you through adding a new processor that
-ingests an *indirect* measurement- the polar angles to features, such as might be extracted from
+ingests an *indirect* measurement—the polar angles to features, such as might be extracted from
 camera images. The measurement model is quite non-linear, and the number of observations per update
 can vary. 
 
@@ -45,7 +45,7 @@ free to compare our results to yours to see how they match up!
 ## Helpful Tips
 
 ```{dropdown} I don't understand how to start solving the problem.
-We recommend starting with the easy parts- the app and the sensor plugin. If you completed the ZUPT
+We recommend starting with the easy parts—the app and the sensor plugin. If you completed the ZUPT
 exercise, the process for these two pieces will be quite similar. Try and set up the app to generate
 a processor that does nothing first, and then fill in the math in the processor later.
 ```
@@ -61,8 +61,8 @@ You'll need to pay attention what `reference_frame` you are dealing with.
 - If you are using the 'pinson' state block as in the other exercises, your processor *will* need
 to ingest nominal inertial PVA data.
 
-- It is also worth mentioning that you have some leeway in what the measurement vector z contains-
-you do not necessarily need to use the raw measurement observations in their original format.
+- It is also worth mentioning that you have some leeway in what the measurement vector z contains—you
+do not necessarily need to use the raw measurement observations in their original format.
 
 - Finally, this model will probably require a fair number of conversions. The `navtk.navutils` module
   has a number of functions that may be useful; `delta_lat_to_north`, `delta_lon_to_east`,
