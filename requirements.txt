@@ -142,7 +142,7 @@ pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7
     # via pntos-python-exercises
 pntos-python-datasets==0.5.0
     # via pntos-python-exercises
-pntos-python-exercises-docs-data==0.5.1
+pntos-python-exercises-docs-data==0.5.2
 pygments==2.19.2
     # via
     #   pytest
