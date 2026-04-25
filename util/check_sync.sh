@@ -69,6 +69,8 @@ check_sync() {
 check_sync $orig_dir"/util/zupt_app.patch"
 # Apply pos baro app patch
 check_sync $orig_dir"/util/pos_baro_app.patch"
+# Apply direction app patch
+check_sync $orig_dir"/util/direction_app.patch"
 
 # Cleanup and return
 popd > /dev/null
