@@ -101,6 +101,7 @@ def boresight_xyz_to_az_el_jacobian(dp: NDArray[float64]) -> NDArray[float64]:
         2x3 Jacobian w.r.t. dp.
 
     """
+    dp = dp.flatten()
     x = dp[0]
     y = dp[1]
     z = dp[2]
