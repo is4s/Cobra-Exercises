@@ -22,8 +22,5 @@ def test_pos_baro_sol() -> None:
     run_pntos_with_log_transport(Path('.details/new_app_exc_ans/pos_baro_app.py'))
 
 
-def test_direction_stub() -> None:
-    # TODO I don't think this does what we want. This exercise raises exceptions but 'passes'.
-    run_pntos_with_log_transport(
-        Path('exercises/direction_processor_exercise/direction_app.py')
-    )
+def test_direction_sol() -> None:
+    run_pntos_with_log_transport(Path('.details/direction_exc_ans/direction_app.py'))
