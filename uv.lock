@@ -1453,7 +1453,7 @@ dev = [
     { name = "mypy", specifier = "==1.18.2" },
     { name = "myst-parser", specifier = ">=4" },
     { name = "pip", specifier = ">=24" },
-    { name = "pntos-python-exercises-docs-data", specifier = "==0.5.1" },
+    { name = "pntos-python-exercises-docs-data", specifier = "==0.5.2" },
     { name = "pytest", specifier = ">=8.2" },
     { name = "ruff", specifier = "==0.13.2" },
     { name = "sphinx", specifier = ">=7.3.7" },
@@ -1463,10 +1463,10 @@ dev = [
 
 [[package]]
 name = "pntos-python-exercises-docs-data"
-version = "0.5.1"
+version = "0.5.2"
 source = { registry = "https://git.aspn.us/api/v4/projects/94/packages/pypi/simple" }
 wheels = [
-    { url = "https://git.aspn.us/api/v4/projects/94/packages/pypi/files/60c5fe77e47e933148221e03c7fb93e3514796aa75b94c9fcdaa9fde5f7e0554/pntos_python_exercises_docs_data-0.5.1-py2.py3-none-any.whl", hash = "sha256:60c5fe77e47e933148221e03c7fb93e3514796aa75b94c9fcdaa9fde5f7e0554" },
+    { url = "https://git.aspn.us/api/v4/projects/94/packages/pypi/files/6e7d9c8e0aa9cb4ed3a261502d5f451ac2ac71f99c7ef9600e01f03223873c7a/pntos_python_exercises_docs_data-0.5.2-py2.py3-none-any.whl", hash = "sha256:6e7d9c8e0aa9cb4ed3a261502d5f451ac2ac71f99c7ef9600e01f03223873c7a" },
 ]
 
 [[package]]
