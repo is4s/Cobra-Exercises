@@ -1,7 +1,7 @@
 # Exercise: Add a Direction to Known Feature Processor
 
 In this exercise, you are tasked with adding a new processor with a more complicated measurement model.
-Throughout this exercise, you will learn how to write and utilize a preprocessor in `pntos-python`.
+Throughout this exercise, you will learn how to write and utilize a measurement processor in `pntos-python`.
 All of the files in `exercises/direction_exercise` will need to be modified in order to fully
 implement the processor.
 
@@ -114,7 +114,7 @@ for k in range(x_and_p.estimate.shape[0]):
     H[:, k] = jac_col.flatten()
 ```
 Note `H` is likely sparse; if using a pinson state block you'll probably only need to verify the 6
-columns corresponding to positon and attitude errors.
+columns corresponding to position and attitude errors.
 ````
 
 ```{dropdown} Click to reveal description of solution.

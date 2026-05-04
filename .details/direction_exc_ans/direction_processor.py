@@ -278,7 +278,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             - No PVA aux data has been received.
             - PVA aux data time doesn't match time stored in message.
             - PVA aux data is missing any position members or the attitude quaternion.
-            - All feature positions in message observations are missing one or more positon element.
+            - All feature positions in message observations are missing one or more position elements.
             - message
         """
         # Verify measurement is of correct type and return None if not
