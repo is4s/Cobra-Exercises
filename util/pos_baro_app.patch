@@ -2,7 +2,15 @@ diff --git a/exercises/new_app_exercise/pos_baro_app.py b/.details/new_app_exc_a
 index 6888c62..b939c28 100644
 --- a/exercises/new_app_exercise/pos_baro_app.py
 +++ b/.details/new_app_exc_ans/pos_baro_app.py
-@@ -82,6 +82,20 @@ my_config = [
+@@ -35,6 +35,7 @@ from pntos.cobra.config import (
+     AltitudeMPConfig,
+     StandardOrchestrationConfig,
+     TimeAdjusterConfig,
++    PinsonWithNedFogmPositionMPConfig,
+ )
+ from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
+ 
+@@ -78,6 +79,20 @@ my_config = [
              imu_model=imu_model,
          ),
          additional_sb_configs=(
@@ -27,20 +35,13 @@ index 6888c62..b939c28 100644
              ),
          ),
          mp_configs=(
-+            SensorMeasurementProcessorConfig(
-+                group='config/gps_measurement_processor',
-+                identifier='pinson_with_ned_fogm_position',
-+                label='gps',
++            PinsonWithNedFogmPositionMPConfig(
++                group='config/pos_measurement_processor',
++                label='pos',
 +                channel='/sensor/ublox-ZED-F9T/position',
 +                state_block_labels=('pinson15', 'pos_sensor_error'),
-+                aux_channels=('INERTIAL_PVA',),
-+                sensor_config=SensorConfig(
-+                    group='config/gp3d_state_modeling',
-+                    lever_arm=(-0.50, 0.38, -0.05),
-+                    orientation=(0.0, 0.0, 0.0, 0.0),
-+                    sensor_name='position',
-+                ),
++                lever_arm=(-0.50, 0.38, -0.05),
 +            ),
-             SensorMeasurementProcessorConfig(
-                 identifier='pinson_altitude',
+             AltitudeMPConfig(
+                 group='config/alt_measurement_processor',
                  label='alt',

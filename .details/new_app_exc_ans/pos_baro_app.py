@@ -35,6 +35,7 @@ from pntos.cobra.config import (
     AltitudeMPConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
+    PinsonWithNedFogmPositionMPConfig,
 )
 from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
 
@@ -108,19 +109,12 @@ my_config = [
             ),
         ),
         mp_configs=(
-            SensorMeasurementProcessorConfig(
-                group='config/gps_measurement_processor',
-                identifier='pinson_with_ned_fogm_position',
-                label='gps',
+            PinsonWithNedFogmPositionMPConfig(
+                group='config/pos_measurement_processor',
+                label='pos',
                 channel='/sensor/ublox-ZED-F9T/position',
                 state_block_labels=('pinson15', 'pos_sensor_error'),
-                aux_channels=('INERTIAL_PVA',),
-                sensor_config=SensorConfig(
-                    group='config/gp3d_state_modeling',
-                    lever_arm=(-0.50, 0.38, -0.05),
-                    orientation=(0.0, 0.0, 0.0, 0.0),
-                    sensor_name='position',
-                ),
+                lever_arm=(-0.50, 0.38, -0.05),
             ),
             AltitudeMPConfig(
                 group='config/alt_measurement_processor',

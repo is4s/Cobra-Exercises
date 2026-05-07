@@ -9,8 +9,13 @@ index 234a450..0babd3b 100755
 +    MeasurementProcessorConfig,
      OutageConfig,
      PinsonStateBlockConfig,
-     SensorConfig,
-@@ -43,6 +44,8 @@ from pntos.cobra.config import (
+-    PinsonWithNedFogmPositionMPConfig,
+     AltitudeMPConfig,
++    PinsonWithNedFogmPositionMPConfig,
+     StandardOrchestrationConfig,
+     TimeAdjusterConfig,
+     TimeBiasConfig,
+@@ -42,6 +43,8 @@ from pntos.cobra.config import (
  from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
  
  from ZuptPreprocessorPlugin import ZuptPreprocessorPlugin
@@ -19,9 +24,9 @@ index 234a450..0babd3b 100755
  
  OUTPUT_LOG = sys.argv[1] if len(sys.argv) > 1 else 'pntos_output.log'
  
-@@ -155,6 +158,14 @@ my_config = [
-                     sensor_name='altitude',
-                 ),
+@@ -137,6 +140,14 @@ my_config = [
+                 channel='/sensor/bmp388/altitude',
+                 state_block_labels=('pinson15', 'alt_fogm'),
              ),
 +            MeasurementProcessorConfig(
 +                group='config/vel_measurement_processor',
