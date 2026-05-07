@@ -55,12 +55,7 @@ html_favicon = f'{branding_dir}/favicon.ico'
 nitpicky = True
 
 # Linkcheck builder options.
-linkcheck_allowed_redirects = {
-    # All redirections to the sign-in page will be counted as "working".
-    r'.*git.aspn.us.*': r'https://git.aspn.us/users/sign_in',
-    r'.*pages\.aspn\.us(?!/pntos-python-exercises/).*': r'https://git.aspn.us/users/sign_in',
-    'https://www.pntOS.com': 'https://www.pntos.com/',
-}
+linkcheck_allowed_redirects = {}
 # Ignore line number anchors (e.g. #L12), since linkcheck gives false positives for these.
 linkcheck_anchors_ignore = [r'L\d*']
 

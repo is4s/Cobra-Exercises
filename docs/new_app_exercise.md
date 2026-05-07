@@ -3,7 +3,7 @@
 This exercise is designed to be a beginner friendly interaction with the Cobra system. We recommend
 you start with this exercise as you should develop a familiarity with apps, which is necessary to
 setup and run an instance of pntOS-Python. In this exercise, the app is already set up with the
-altitude update, so all you must do is add a GPS position update to the stubbed-out app. 
+altitude update, so all you must do is add a GPS position update to the stubbed-out app.
 
 ## Motivation
 
@@ -42,7 +42,7 @@ by the config.
 
 ## Log Metadata
 
-[Here](https://pntos.pages.aspn.us/pntos-python/example_data.html) is a list of channels and
+[Here](https://is4s.github.io/pntOS-Python/example_data.html) is a list of channels and
 some metadata on the log.
 
 ## Verifying the Solution
@@ -62,7 +62,7 @@ your results should be similar to.
 
 ```{dropdown} What is an app and how do I modify it?
 If this is the position you find yourself in, we recommend you check out our primary documentation
-on the [tutorial apps](https://pntos.pages.aspn.us/pntos-python/apps/gps_ins.html). This will walk
+on the [tutorial apps](https://is4s.github.io/pntOS-Python/apps/pos_ins.html). This will walk
 through all the basics of an app and the follow-on tutorial will even describe how to change it.
 ```
 
@@ -75,9 +75,9 @@ through this exercise.
 
 ```{dropdown} Where do I find a list of measurement processors?
 A list of available measurement processors can be found in the `StandardStateModelingPlugin` docs
-[on this page](https://pntos.pages.aspn.us/pntos-python/autodocs/cobra_internal.html).
+[on this page](https://is4s.github.io/pntOS-Python/autodocs/cobra_internal.html).
 The corresponding identifier must be located in the source code
-[here](https://git.aspn.us/pntos/pntos-python/-/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
+[here](https://github.com/is4s/pntOS-Python/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
 ```
 
 ```{dropdown} I believe I have added the necessary components, but the results don't look the same.
@@ -97,7 +97,7 @@ config appropriately? Are you using a `SensorMeasurementProcessorConfig`?
 If `pntOS` won't run to completion, there is an error in the config you have added or altered.
 The most likely way this would happen is an invalid type was used in a config class, so validate
 that the types you have put on the classes match the type hints. There are many other possibilities
-that may cause this, so the best advice we can give is to closely examine the terminal output for 
+that may cause this, so the best advice we can give is to closely examine the terminal output for
 answers.
 
 If you are still struggling, the next drop down contains a description of our solution. We urge you
@@ -121,5 +121,5 @@ accomplishes the requirements described above by:
     - using the information in [](#a-priori-information) to fill in other various fields.
 
 If you find the above description hard to follow, our solution can be found at
-`.details/new_app_exc_ans/`. 
+`.details/new_app_exc_ans/`.
 ```
