@@ -11,7 +11,7 @@ index 234a450..0babd3b 100755
      PinsonStateBlockConfig,
      SensorConfig,
 @@ -43,6 +44,8 @@ from pntos.cobra.config import (
- from pntos_python_datasets import EXAMPLE_LCM_LOG
+ from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
  
  from ZuptPreprocessorPlugin import ZuptPreprocessorPlugin
 +from ZuptConfig import ZuptConfig

@@ -40,7 +40,7 @@ from pntos.cobra.config import (
     TimeAdjusterConfig,
     TimeBiasConfig,
 )
-from pntos_python_datasets import EXAMPLE_LCM_LOG
+from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
 
 from ZuptPreprocessorPlugin import ZuptPreprocessorPlugin
 
