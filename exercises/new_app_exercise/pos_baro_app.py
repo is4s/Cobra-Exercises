@@ -14,7 +14,7 @@ from pntos.cobra import (
     ManualHeadingAlignInitializationPlugin,
     StandardControllerPlugin,
     StandardFusionPlugin,
-    StandardGpsInsStateModelingPlugin,
+    StandardStateModelingPlugin,
     StandardInertialPlugin,
     StandardLoggingPlugin,
     StandardOrchestrationPlugin,
@@ -152,7 +152,7 @@ plugins = [
     LcmLogTransportPlugin('Cobra LCM Log Transport Plugin'),
     EkfFusionStrategyPlugin('Cobra EKF Fusion Strategy Plugin'),
     StandardFusionPlugin('Cobra Standard Fusion Plugin'),
-    StandardGpsInsStateModelingPlugin('Cobra Standard State Modeling Plugin'),
+    StandardStateModelingPlugin('Cobra Standard State Modeling Plugin'),
     StandardInertialPlugin('Cobra Standard Inertial Plugin'),
     ManualHeadingAlignInitializationPlugin(
         'Cobra Manual Heading Static Align Initialization Plugin'
