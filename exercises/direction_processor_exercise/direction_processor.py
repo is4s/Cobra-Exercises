@@ -1,7 +1,7 @@
 from numpy import float64, zeros
 from numpy.typing import NDArray
 from pntos.api import (
-    EstimateWithCovariance,
+    GenXandP,
     Mediator,
     Message,
     StandardMeasurementModel,
@@ -27,7 +27,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
     def generate_model(
         self,
         message: Message,
-        x_and_p: EstimateWithCovariance,
+        x_and_p: GenXandP,
     ) -> StandardMeasurementModel | None:
         num_states = 0  # Expected size of state vector
         size_of_obs = 0  # Expected size of a single feature observation vector

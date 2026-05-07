@@ -23,7 +23,7 @@ from numpy import (
 from numpy.linalg import inv, norm
 from numpy.typing import NDArray
 from pntos.api import (
-    EstimateWithCovariance,
+    GenXandP,
     LoggingLevel,
     Mediator,
     Message,
@@ -255,7 +255,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
     def generate_model(
         self,
         message: Message,
-        x_and_p: EstimateWithCovariance,
+        x_and_p: GenXandP,
     ) -> StandardMeasurementModel | None:
         """
         Generates a StandardMeasurementModel.
@@ -368,7 +368,11 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         # All of these were checked earlier, but typechecking insists it be done again.
         # Since we know these are safe, just use asserts.
         pos = array([self._pva.p1, self._pva.p2, self._pva.p3])
-        cnp = (eye(3) - skew(x_and_p.estimate[6:9, 0])) @ quat_to_dcm(  # type: ignore [arg-type]
+        estimate_with_covariance = x_and_p(self.state_block_labels)
+        if estimate_with_covariance is None:
+            return None
+        estimate = estimate_with_covariance.estimate
+        cnp = (eye(3) - skew(estimate[6:9, 0])) @ quat_to_dcm(  # type: ignore [arg-type]
             self._pva.quaternion  # type: ignore [arg-type]
         )
 
@@ -407,10 +411,10 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             # Return all predicted azimuth/elevation measurements
             return out
 
-        # Using x_and_p.estimate.shape is preferred to hardcoding a state block size as it allows
+        # Using estimate.shape is preferred to hardcoding a state block size as it allows
         # all state blocks that contain the required states in the correct locations (in this case
         # position errors in [0:3] and attitude errors in [6:9]) to be used with the same processor.
-        H = zeros((2 * num_obs, x_and_p.estimate.shape[0]))
+        H = zeros((2 * num_obs, estimate.shape[0]))
         for k in range(num_obs):
             rp = meas.obs[k].remote_point
             assert rp.position1 is not None
@@ -418,7 +422,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             assert rp.position3 is not None
             feature_pos = array([rp.position1, rp.position2, rp.position3])
             xyz = calculate_boresight_arg(
-                x_and_p.estimate,
+                estimate,
                 cnp,
                 feature_pos,
                 pos,
@@ -427,7 +431,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             )
             j1 = boresight_xyz_to_az_el_jacobian(xyz)
             j2 = calculate_boresight_arg_jacobian(
-                x_and_p.estimate, cnp, feature_pos, pos, self._C_platform_to_sensor
+                estimate, cnp, feature_pos, pos, self._C_platform_to_sensor
             )
             H[2 * k : (2 * k + 2), :] = j1 @ j2
 
