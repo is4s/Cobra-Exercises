@@ -33,8 +33,7 @@ from pntos.cobra.config import (
     ManualHeadingAlignmentConfig,
     OutageConfig,
     PinsonStateBlockConfig,
-    SensorConfig,
-    SensorMeasurementProcessorConfig,
+    AltitudeMPConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
     TimeBiasConfig,
@@ -138,19 +137,11 @@ my_config = [
                     sensor_name='position',
                 ),
             ),
-            SensorMeasurementProcessorConfig(
+            AltitudeMPConfig(
                 group='config/alt_measurement_processor',
-                identifier='pinson_altitude',
                 label='alt',
                 channel='/sensor/bmp388/altitude',
                 state_block_labels=('pinson15', 'alt_fogm'),
-                aux_channels=('INERTIAL_PVA',),
-                sensor_config=SensorConfig(
-                    group='config/alt_state_modeling',
-                    lever_arm=(0.0, 0.0, 0.0),
-                    orientation=(0.0, 0.0, 0.0, 0.0),
-                    sensor_name='altitude',
-                ),
             ),
         ),
         inertial_config=InertialConfig(
