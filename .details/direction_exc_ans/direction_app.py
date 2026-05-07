@@ -20,7 +20,6 @@ from pntos.cobra import (
     StandardRegistryPlugin,
 )
 from pntos.cobra.config import (
-    AspnVersion,
     ControllerConfig,
     ImuConfig,
     ImuRotatorConfig,
@@ -60,7 +59,6 @@ my_config = [
     LcmLogTransportConfig(
         input_file=EXAMPLE_LCM_LOG,
         output_file=OUTPUT_LOG,
-        output_version=AspnVersion.V23,
         channels_to_process=(
             '/sensor/vn-100/imu',
             '/sensor/ublox-ZED-F9T/position',
