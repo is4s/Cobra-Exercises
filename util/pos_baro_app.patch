@@ -23,7 +23,7 @@ index 6888c62..b939c28 100644
              FogmStateBlockConfig(
                  group='config/alt_fogm_block',
                  label='alt_fogm',
-@@ -98,6 +112,20 @@ my_config = [
+@@ -97,6 +111,20 @@ my_config = [
              ),
          ),
          mp_configs=(
@@ -42,5 +42,5 @@ index 6888c62..b939c28 100644
 +                ),
 +            ),
              SensorMeasurementProcessorConfig(
-                 group='config/alt_measurement_processor',
                  identifier='pinson_altitude',
+                 label='alt',
