@@ -27,8 +27,7 @@ from pntos.cobra.config import (
     LcmLogTransportConfig,
     ManualHeadingAlignmentConfig,
     PinsonStateBlockConfig,
-    SensorConfig,
-    SensorMeasurementProcessorConfig,
+    Direction3dToPointsMPConfig,
     StandardOrchestrationConfig,
     TimeAdjusterConfig,
 )
@@ -77,19 +76,13 @@ my_config = [
         ),
         # Needed to add configuration for the MeasurementProcessor
         mp_configs=(
-            SensorMeasurementProcessorConfig(
+            Direction3dToPointsMPConfig(
                 group='config/direction_measurement_processor',
-                identifier='pinson_direction_processor',
                 label='direction',
                 channel='/sensor/simulated/directiontoknownfeature',
                 state_block_labels=('pinson15',),
-                aux_channels=('INERTIAL_PVA',),
-                sensor_config=SensorConfig(
-                    group='config/direction_state_modeling',
-                    lever_arm=(0.80, 0.0, 0.05),
-                    orientation=(0.707106781, 0.0, 0.707106781, 0.0),
-                    sensor_name='direction',
-                ),
+                lever_arm=(0.80, 0.0, 0.05),
+                orientation=(0.707106781, 0.0, 0.707106781, 0.0),
             ),
         ),
         inertial_config=InertialConfig(

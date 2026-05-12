@@ -7,7 +7,7 @@ from pntos.api.plugins.state_modeling import (
     StateModelProviderType,
 )
 from pntos.cobra.config import (
-    SensorMeasurementProcessorConfig,
+    Direction3dToPointsMPConfig,
     config_from_registry,
 )
 
@@ -53,7 +53,7 @@ class DirectionModelProvider(StandardStateModelProvider):
                     )
                     return None
                 sensor_mp_config = config_from_registry(
-                    SensorMeasurementProcessorConfig, self._mediator, config_group
+                    Direction3dToPointsMPConfig, self._mediator, config_group
                 )
                 if sensor_mp_config is None:
                     self._mediator.log_message(
@@ -65,8 +65,8 @@ class DirectionModelProvider(StandardStateModelProvider):
                     label,
                     state_block_labels,
                     self._mediator,
-                    np.array(sensor_mp_config.sensor_config.lever_arm),
-                    np.array(sensor_mp_config.sensor_config.orientation),
+                    np.array(sensor_mp_config.lever_arm),
+                    np.array(sensor_mp_config.orientation),
                 )
 
         self._mediator.log_message(
