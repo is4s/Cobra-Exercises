@@ -1,8 +1,8 @@
 diff --git a/exercises/new_app_exercise/pos_baro_app.py b/.details/new_app_exc_ans/pos_baro_app.py
-index 932afaf..78f9302 100644
+index 5d268e9..0ee3a7d 100755
 --- a/exercises/new_app_exercise/pos_baro_app.py
 +++ b/.details/new_app_exc_ans/pos_baro_app.py
-@@ -35,6 +35,7 @@ from pntos.cobra.config import (
+@@ -36,6 +36,7 @@ from pntos.cobra.config import (
      AltitudeMPConfig,
      StandardOrchestrationConfig,
      TimeAdjusterConfig,
@@ -10,7 +10,7 @@ index 932afaf..78f9302 100644
  )
  from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
  
-@@ -78,6 +79,20 @@ my_config = [
+@@ -80,6 +81,20 @@ my_config = [
              imu_model=imu_model,
          ),
          additional_sb_configs=(
@@ -31,7 +31,7 @@ index 932afaf..78f9302 100644
              FogmStateBlockConfig(
                  group='config/alt_fogm_block',
                  label='alt_fogm',
-@@ -94,6 +109,13 @@ my_config = [
+@@ -96,6 +111,13 @@ my_config = [
              ),
          ),
          mp_configs=(
