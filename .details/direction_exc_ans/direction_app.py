@@ -21,6 +21,7 @@ from pntos.cobra import (
 )
 from pntos.cobra.config import (
     ControllerConfig,
+    FusionEngineConfig,
     ImuConfig,
     ImuRotatorConfig,
     InertialConfig,
@@ -65,6 +66,7 @@ my_config = [
         ),
     ),
     ControllerConfig(),
+    FusionEngineConfig(),
     StandardOrchestrationConfig(
         best_sol_channel='/solution/pntos/pva',
         imu_sol_channel='/solution/pntos-imu/pva',
