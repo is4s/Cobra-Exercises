@@ -15,12 +15,12 @@ classifiers = [
 ]
 
 dependencies = [
-    "analysis-lcm @ git+ssh://git@git.aspn.us/pntos/analysis-scripts.git@6a457e6db086d3325b52a2ec5d379ece2a9c2c64#subdirectory=analysis-lcm",
-    # main branch, committed 18 March 2026
-    'pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-api',
-    'pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-cobra',
-    # Generated from branch v0.4.3 on 1 December 2025
-    "pntos-python-datasets==0.5.0",
+    # analysis-scripts main branch - committed 1 May 2026
+    'analysis-lcm @ git+https://git@github.com/Open-PNT/analysis-scripts.git@92ee7b01d89a4b06abb07a37c3a990e3933d9ef6#subdirectory=analysis-lcm',
+    # main branch, committed 6 May 2026
+    'pntos-api @ git+https://github.com/is4s/pntOS-Python.git@59229306fcc94f22fe0f58af20def55452910c1c#subdirectory=pntos-api',
+    'pntos-cobra @ git+https://github.com/is4s/pntOS-Python.git@59229306fcc94f22fe0f58af20def55452910c1c#subdirectory=pntos-cobra',
+    'pntos-python-datasets-lcm==0.1.0',
 ]
 
 [dependency-groups]
@@ -28,12 +28,12 @@ dev = [
     'mypy==1.18.2',
     'myst-parser>=4',
     'pip>=24',
-    # Generated from commit ce6c78bd72ca4d3f890987f0c13e1d0c12acced3 on 17 March 2026
-    "pntos-python-exercises-docs-data==0.5.2",
-    "pytest>=8.2",
+    # pntos-python-exercises/v0 branch, committed 7 May 2026
+    'pntos-python-exercises-docs-data @ git+https://git@github.com/Open-PNT/navigation-data.git@f3109e4298184da69abd0f0865b1e799e972b566',
+    'pytest>=8.2',
     'ruff==0.13.2',
     'sphinx>=7.3.7',
-    "sphinx-design",
+    'sphinx-design',
     'sphinx-rtd-theme>=3.0.2',
 ]
 
@@ -42,12 +42,8 @@ format.quote-style = 'single'
 
 [tool.mypy]
 strict = true
-disable_error_code = [ "import-untyped", "no-untyped-call" ]
+disable_error_code = [ 'import-untyped', 'no-untyped-call' ]
 warn_unreachable = true
 
 [tool.uv]
 package = false
-
-[[tool.uv.index]]
-url = 'https://git.aspn.us/api/v4/projects/94/packages/pypi/simple'
-cache-control = { api = 'max-age=600', files = 'max-age=365000000, immutable' }

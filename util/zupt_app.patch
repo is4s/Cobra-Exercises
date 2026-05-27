@@ -1,17 +1,22 @@
 diff --git a/exercises/zupt_exercise/zupt_app.py b/.details/zupt_exc_ans/zupt_app.py
-index 234a450..0babd3b 100755
+index cb52986..bd2421b 100755
 --- a/exercises/zupt_exercise/zupt_app.py
 +++ b/.details/zupt_exc_ans/zupt_app.py
-@@ -32,6 +32,7 @@ from pntos.cobra.config import (
+@@ -32,10 +32,11 @@ from pntos.cobra.config import (
      InertialConfig,
      LcmLogTransportConfig,
      ManualHeadingAlignmentConfig,
 +    MeasurementProcessorConfig,
      OutageConfig,
      PinsonStateBlockConfig,
-     SensorConfig,
+-    PinsonWithNedFogmPositionMPConfig,
+     AltitudeMPConfig,
++    PinsonWithNedFogmPositionMPConfig,
+     StandardOrchestrationConfig,
+     TimeAdjusterConfig,
+     TimeBiasConfig,
 @@ -43,6 +44,8 @@ from pntos.cobra.config import (
- from pntos_python_datasets import EXAMPLE_LCM_LOG
+ from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
  
  from ZuptPreprocessorPlugin import ZuptPreprocessorPlugin
 +from ZuptConfig import ZuptConfig
@@ -19,9 +24,9 @@ index 234a450..0babd3b 100755
  
  OUTPUT_LOG = sys.argv[1] if len(sys.argv) > 1 else 'pntos_output.log'
  
-@@ -155,6 +158,14 @@ my_config = [
-                     sensor_name='altitude',
-                 ),
+@@ -139,6 +142,14 @@ my_config = [
+                 channel='/sensor/bmp388/altitude',
+                 state_block_labels=('pinson15', 'alt_fogm'),
              ),
 +            MeasurementProcessorConfig(
 +                group='config/vel_measurement_processor',
@@ -34,7 +39,7 @@ index 234a450..0babd3b 100755
          ),
          inertial_config=InertialConfig(
              group='config/inertial',
-@@ -197,6 +208,11 @@ my_config = [
+@@ -181,6 +192,11 @@ my_config = [
                  start_time=1000.0,
                  end_time=2700.0,
              ),
@@ -45,4 +50,4 @@ index 234a450..0babd3b 100755
 +            ),
          ),
          max_prop_interval=1.0,
-         group='config/orchestration',
+     ),

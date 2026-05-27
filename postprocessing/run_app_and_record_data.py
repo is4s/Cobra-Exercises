@@ -9,8 +9,7 @@ from pntos.cobra.utils.lcm_utils import (
     run_pntos_with_log_transport,
     run_pntos_with_network_transport,
 )
-from pntos.cobra.utils.ros import get_ros_bag_file, run_pntos_with_ros_transport
-from pntos_python_datasets import EXAMPLE_LCM_LOG, EXAMPLE_ROS_LOG
+from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
 
 OUTPUT_LOG_PREFIX = 'pntos_output'
 OUTPUT_LOG = Path(f'{OUTPUT_LOG_PREFIX}.log')
@@ -28,11 +27,6 @@ if __name__ == '__main__':
         returncode = run_pntos_with_network_transport(
             app_to_run, Path(EXAMPLE_LCM_LOG), OUTPUT_LOG, validate=True
         )
-    elif 'ros' in app_to_run.as_posix():
-        returncode = run_pntos_with_ros_transport(
-            app_to_run, Path(EXAMPLE_ROS_LOG), Path(OUTPUT_LOG_PREFIX)
-        )
-        OUTPUT_LOG = get_ros_bag_file(OUTPUT_LOG_PREFIX)
     else:
         returncode = run_pntos_with_log_transport(app_to_run, [OUTPUT_LOG.as_posix()])
 

@@ -12,7 +12,7 @@ from pntos.cobra import (
     ManualHeadingAlignInitializationPlugin,
     StandardControllerPlugin,
     StandardFusionPlugin,
-    StandardGpsInsStateModelingPlugin,
+    StandardStateModelingPlugin,
     StandardInertialPlugin,
     StandardLoggingPlugin,
     StandardOrchestrationPlugin,
@@ -20,8 +20,8 @@ from pntos.cobra import (
     StandardRegistryPlugin,
 )
 from pntos.cobra.config import (
-    AspnVersion,
     ControllerConfig,
+    FusionEngineConfig,
     ImuConfig,
     ImuRotatorConfig,
     InertialConfig,
@@ -33,7 +33,7 @@ from pntos.cobra.config import (
 )
 from direction_plugin import DirectionPlugin
 
-from pntos_python_datasets import EXAMPLE_LCM_LOG
+from pntos_python_datasets_lcm import EXAMPLE_LCM_LOG
 
 OUTPUT_LOG = sys.argv[1] if len(sys.argv) > 1 else 'pntos_output.log'
 
@@ -58,15 +58,14 @@ my_config = [
     LcmLogTransportConfig(
         input_file=EXAMPLE_LCM_LOG,
         output_file=OUTPUT_LOG,
-        output_version=AspnVersion.V23,
-        group='config/lcm_log_transport',
         channels_to_process=(
             '/sensor/vn-100/imu',
             '/sensor/ublox-ZED-F9T/position',
             '/sensor/simulated/directiontoknownfeature',
         ),
     ),
-    ControllerConfig(group='controller'),
+    ControllerConfig(),
+    FusionEngineConfig(),
     StandardOrchestrationConfig(
         best_sol_channel='/solution/pntos/pva',
         imu_sol_channel='/solution/pntos-imu/pva',
@@ -104,7 +103,6 @@ my_config = [
             ),
         ),
         max_prop_interval=1.0,
-        group='config/orchestration',
     ),
 ]
 # End Config
@@ -115,7 +113,7 @@ plugins = [
     LcmLogTransportPlugin('Cobra LCM Log Transport Plugin'),
     EkfFusionStrategyPlugin('Cobra EKF Fusion Strategy Plugin'),
     StandardFusionPlugin('Cobra Standard Fusion Plugin'),
-    StandardGpsInsStateModelingPlugin('Cobra Standard State Modeling Plugin'),
+    StandardStateModelingPlugin('Cobra Standard State Modeling Plugin'),
     DirectionPlugin('Exercise Direction to Known Feature Plugin'),
     StandardInertialPlugin('Cobra Standard Inertial Plugin'),
     ManualHeadingAlignInitializationPlugin(

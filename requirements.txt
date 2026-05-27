@@ -2,25 +2,18 @@
 #    uv export --frozen --no-hashes -o requirements.txt
 alabaster==1.0.0
     # via sphinx
-analysis-lcm @ git+ssh://git@git.aspn.us/pntos/analysis-scripts.git@6a457e6db086d3325b52a2ec5d379ece2a9c2c64#subdirectory=analysis-lcm
+analysis-lcm @ git+https://github.com/Open-PNT/analysis-scripts.git@92ee7b01d89a4b06abb07a37c3a990e3933d9ef6#subdirectory=analysis-lcm
     # via
     #   analysis-ros
     #   pntos-cobra
     #   pntos-python-exercises
-analysis-ros @ git+ssh://git@git.aspn.us/pntos/analysis-scripts.git@6a457e6db086d3325b52a2ec5d379ece2a9c2c64#subdirectory=analysis-ros
+analysis-ros @ git+https://github.com/Open-PNT/analysis-scripts.git@92ee7b01d89a4b06abb07a37c3a990e3933d9ef6#subdirectory=analysis-ros
     # via pntos-cobra
-aspn2-lcm @ git+ssh://git@git.aspn.us/pntos/lcm-generated.git@831a7727bffab217b3de60491dc12b96b50887a1#subdirectory=python
+aspn23 @ git+https://github.com/is4s/aspn-generated.git@7e1f35bc84b90c6d361e690601448f8087e1a626#subdirectory=aspn-py
     # via
-    #   aspn2-translations
-    #   pntos-cobra
-aspn2-translations @ git+ssh://git@git.aspn.us/pntos/firehose-outputs.git@1cd02aa9bd7f9cd33a5ee7842c2f7ff2f31a3415#subdirectory=aspn2_to_aspn_py_translations
-    # via pntos-cobra
-aspn23 @ git+ssh://git@git.aspn.us/pntos/firehose-outputs.git@b8a34d86cf501fff795ea1953b076c92abca2465#subdirectory=aspn-py
-    # via
-    #   aspn2-translations
     #   pntos-api
     #   pntos-cobra
-aspn23-lcm @ git+ssh://git@git.aspn.us/pntos/firehose-outputs.git@b8a34d86cf501fff795ea1953b076c92abca2465#subdirectory=lcm/python
+aspn23-lcm @ git+https://github.com/is4s/aspn-generated.git@7e1f35bc84b90c6d361e690601448f8087e1a626#subdirectory=lcm/python
     # via pntos-cobra
 babel==2.18.0
     # via sphinx
@@ -71,8 +64,6 @@ kiwisolver==1.5.0
     # via matplotlib
 lcm==1.5.2
     # via
-    #   aspn2-lcm
-    #   aspn2-translations
     #   aspn23-lcm
     #   pntos-cobra
 markdown-it-py==3.0.0 ; python_full_version < '3.11'
@@ -96,11 +87,10 @@ mypy-extensions==1.1.0
     # via mypy
 myst-parser==4.0.1 ; python_full_version < '3.11'
 myst-parser==5.0.0 ; python_full_version >= '3.11'
-navtk==2.1.0.post3.dev0
+navtk==2.1.0.post6.dev0
     # via pntos-cobra
 numpy==2.2.6 ; python_full_version < '3.11'
     # via
-    #   aspn2-translations
     #   aspn23
     #   contourpy
     #   h5py
@@ -112,7 +102,6 @@ numpy==2.2.6 ; python_full_version < '3.11'
     #   scipy
 numpy==2.4.3 ; python_full_version >= '3.11'
     # via
-    #   aspn2-translations
     #   aspn23
     #   contourpy
     #   h5py
@@ -134,15 +123,15 @@ pillow==12.1.1
 pip==26.0.1
 pluggy==1.6.0
     # via pytest
-pntos-api @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-api
+pntos-api @ git+https://github.com/is4s/pntOS-Python.git@59229306fcc94f22fe0f58af20def55452910c1c#subdirectory=pntos-api
     # via
     #   pntos-cobra
     #   pntos-python-exercises
-pntos-cobra @ git+ssh://git@git.aspn.us/pntos/pntos-python.git@c52d2718d72a46ad7ba9fefc77c389008fa5bf5f#subdirectory=pntos-cobra
+pntos-cobra @ git+https://github.com/is4s/pntOS-Python.git@59229306fcc94f22fe0f58af20def55452910c1c#subdirectory=pntos-cobra
     # via pntos-python-exercises
-pntos-python-datasets==0.5.0
+pntos-python-datasets-lcm==0.1.0
     # via pntos-python-exercises
-pntos-python-exercises-docs-data==0.5.2
+pntos-python-exercises-docs-data @ git+https://github.com/Open-PNT/navigation-data.git@f3109e4298184da69abd0f0865b1e799e972b566
 pygments==2.19.2
     # via
     #   pytest
