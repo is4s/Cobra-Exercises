@@ -25,7 +25,7 @@ class ZuptPreprocessorPlugin(PreprocessorPlugin):
             return None
         # REMOVE THE MESSAGE BELOW AFTER IMPLEMENTING
         self.mediator.log_message(
-            LoggingLevel.WARN,
+            LoggingLevel.INFO,
             'ExercisePreprocessorPlugin has not been setup to provide any preprocessors.',
         )
 
