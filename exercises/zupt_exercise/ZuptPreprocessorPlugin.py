@@ -26,7 +26,7 @@ class ZuptPreprocessorPlugin(PreprocessorPlugin):
         # REMOVE THE MESSAGE BELOW AFTER IMPLEMENTING
         self.mediator.log_message(
             LoggingLevel.INFO,
-            'ExercisePreprocessorPlugin has not been setup to provide any preprocessors.',
+            'ZuptPreprocessorPlugin has not been set up to provide any preprocessors. Add a preprocessor to complete the exercise',
         )
 
     def shutdown_plugin(self) -> None:
