@@ -5,6 +5,8 @@ description = 'A meta package for pntOS-Python exercises.'
 readme = 'README.md'
 authors = [ { name = 'IS4S', email = 'pntos@is4s.com' } ]
 requires-python = '>=3.10'
+license = 'Apache-2.0'
+license-files = [ 'LICENSE' ]
 
 classifiers = [
     'Programming Language :: Python :: 3 :: Only',
