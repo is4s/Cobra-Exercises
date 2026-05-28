@@ -4,16 +4,23 @@ This project includes a series of on-your-own exercises to further your understa
 pntOS-Python and your ability to write your own plugins and apps. If you haven't already, check out
 the [pntOS-Python documentation](https://is4s.github.io/pntOS-Python) before starting here.
 
+% Add a target so we can link back to this section from the installation instructions.
+(set-up-target)=
 ## Set Up
 
-The installation and set up of this project is [the same process as for
-pntOS-Python](https://is4s.github.io/pntOS-Python/installation.html). Please ensure you have an
-activated Python virtual environment and have installed the required dependencies before continuing.
+See [The Installation Instructions](./installation) for information on how to download the project
+and install its dependencies before proceeding.
 
 # Exercises
 
 You can find the exercises below. They are generally ordered in terms of increasing difficulty and
 complexity.
+
+```{toctree}
+:caption: Getting Started
+:hidden:
+installation
+```
 
 ```{toctree}
 new_app_exercise
