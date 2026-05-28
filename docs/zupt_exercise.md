@@ -1,9 +1,14 @@
 # Exercise 2: Writing a New App With a New Preprocessor
 
-In this exercise, you are tasked with adding a completely new feature—a zero-velocity update!
+In this exercise, you are tasked with adding a completely new feature—a zero-velocity update (ZUPT)!
 Throughout this exercise, you will learn how to write and utilize a preprocessor in `pntos-python`.
-All of the files in `exercises/zupt_exercise` will need to be modified in order for the ZUPT to
-be properly utilized.
+All of the files in `exercises/zupt_exercise` will need to be modified in order for the ZUPT to be
+properly utilized. To complete the exercise:
+
+1. Modify the stubbed-out Preprocessor plugin to generate a new zero-velocity measurement.
+2. Identify an off-the-shelf Cobra velocity measurement processor to use.
+3. Update the stubbed-out app to use both 1 & 2.
+
 
 ## Motivation
 
