@@ -23,6 +23,7 @@ installation
 ```
 
 ```{toctree}
+:maxdepth: 1
 new_app_exercise
 zupt_exercise
 direction_app_exercise
