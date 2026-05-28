@@ -1,4 +1,4 @@
-# Exercise: Add a Zero-Velocity Update (ZUPT) Preprocessor
+# Exercise 2: Writing a New App With a New Preprocessor
 
 In this exercise, you are tasked with adding a completely new feature—a zero-velocity update!
 Throughout this exercise, you will learn how to write and utilize a preprocessor in `pntos-python`.

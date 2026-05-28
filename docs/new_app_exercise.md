@@ -1,4 +1,4 @@
-# Exercise: GPS Position and Altitude App
+# Exercise 1: Writing a New App From Existing Cobra Plugins
 
 This exercise is designed to be a beginner friendly interaction with the Cobra system. We recommend
 you start with this exercise as you should develop a familiarity with apps, which is necessary to

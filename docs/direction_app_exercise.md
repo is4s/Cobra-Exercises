@@ -1,4 +1,4 @@
-# Exercise: Add a Direction to Known Feature Processor
+# Exercise 3: Add a Direction to Known Feature Processor
 
 In this exercise, you are tasked with adding a new processor with a more complicated measurement model.
 Throughout this exercise, you will learn how to write and utilize a measurement processor in `pntos-python`.
