@@ -17,11 +17,9 @@ classifiers = [
 ]
 
 dependencies = [
-    # analysis-scripts main branch - committed 1 May 2026
-    'analysis-lcm @ git+https://git@github.com/Open-PNT/analysis-scripts.git@92ee7b01d89a4b06abb07a37c3a990e3933d9ef6#subdirectory=analysis-lcm',
-    # main branch, committed 6 May 2026
-    'pntos-api @ git+https://github.com/is4s/pntOS-Python.git@59229306fcc94f22fe0f58af20def55452910c1c#subdirectory=pntos-api',
-    'pntos-cobra @ git+https://github.com/is4s/pntOS-Python.git@59229306fcc94f22fe0f58af20def55452910c1c#subdirectory=pntos-cobra',
+    'analysis-lcm>=0.1.3',
+    "pntos-api>=2.0.0,<3.0.0",
+    'pntos-cobra==2.1.0-0.dev0',
     'pntos-python-datasets-lcm==0.1.0',
 ]
 
