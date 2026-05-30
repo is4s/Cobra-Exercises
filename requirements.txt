@@ -153,7 +153,7 @@ pntos-api==2.1.0.post0.dev0
     # via
     #   pntos-cobra
     #   pntos-python-exercises
-pntos-cobra==2.1.0.post0.dev0
+pntos-cobra==2.1.0.post0.dev1
     # via pntos-python-exercises
 pntos-python-datasets-lcm==0.1.0
     # via pntos-python-exercises
