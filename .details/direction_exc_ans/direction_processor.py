@@ -8,8 +8,8 @@ from aspn23 import (
 
 from navtk.navutils import delta_lat_to_north, delta_lon_to_east, quat_to_dcm, skew
 from numpy import (
-    asin,
-    atan2,
+    arcsin,
+    arctan2,
     cos,
     eye,
     float64,
@@ -60,8 +60,8 @@ def convert_sine_space_to_az_el(
     Return:
         2-tuple containing converted estimate and covariance.
     """
-    el = -asin(x[1])
-    az = asin(x[0] / cos(el))
+    el = -arcsin(x[1])
+    az = arcsin(x[0] / cos(el))
     tx = inv(az_el_to_sin_jac(az, el))
     return (array([az, el]), tx @ cov @ tx.T)
 
@@ -85,8 +85,8 @@ def boresight_xyz_to_az_el(dp: NDArray[float64]) -> NDArray[float64]:
     # idea to use it in a fusion update.
     if r < 1e-20:
         return array([0.0, 0.0])
-    az = atan2(dp[1], dp[0])
-    el = asin(dot([0, 0, -1], dp / r))
+    az = arctan2(dp[1], dp[0])
+    el = arcsin(dot([0, 0, -1], dp / r))
     return array([az, el])
 
 
@@ -146,7 +146,7 @@ def calculate_boresight_arg(
     """
     # Find predicted NED coordinates of observation wrt self, correcting the nominal
     # with the error states
-    cnp = (eye(3) - skew(x[6:9, 0])) @ cnp_hat  # type: ignore [arg-type]
+    cnp = (eye(3) - skew(x[6:9, 0])) @ cnp_hat
     n = delta_lat_to_north(rp[0] - pos[0], pos[0], pos[2]) - x[0]
     e = delta_lon_to_east(rp[1] - pos[1], pos[0], pos[2]) - x[1]
     d = pos[2] - rp[2] - x[2]
@@ -182,7 +182,7 @@ def calculate_boresight_arg_jacobian(
     ned: NDArray[float64] = array([n, e, d])
     jac = zeros((3, x.shape[0]))
     jac[:, 0:3] = -csp @ cnp.T
-    jac[:, 6:9] = jac[:, 0:3] @ skew(ned)  # type: ignore [arg-type]
+    jac[:, 6:9] = jac[:, 0:3] @ skew(ned)
     return jac
 
 
@@ -228,7 +228,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         self._mediator = mediator
         self._l_ps_p = l_ps_p
         self._pva = None
-        self._C_platform_to_sensor = quat_to_dcm(C_platform_to_sensor)  # type: ignore [arg-type, assignment]
+        self._C_platform_to_sensor = quat_to_dcm(C_platform_to_sensor)
 
     def receive_aux_data(self, aux: list[Message | None]) -> None:
         """
@@ -372,9 +372,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
         if estimate_with_covariance is None:
             return None
         estimate = estimate_with_covariance.estimate
-        cnp = (eye(3) - skew(estimate[6:9, 0])) @ quat_to_dcm(  # type: ignore [arg-type]
-            self._pva.quaternion  # type: ignore [arg-type]
-        )
+        cnp = (eye(3) - skew(estimate[6:9, 0])) @ quat_to_dcm(self._pva.quaternion)
 
         # Define the non-linear measurement function that predicts the azimuth and elevation
         # of each observed feature given nominal observer position, the feature position, the
@@ -391,7 +389,7 @@ class DirectionMeasurementProcessor(StandardMeasurementProcessor):
             pos = array([self._pva.p1, self._pva.p2, self._pva.p3])
             # First-order correction of the nominal platform to NED rotation with current tilt
             # error estimates
-            cnp = (eye(3) - skew(x[6:9, 0])) @ quat_to_dcm(self._pva.quaternion)  # type: ignore [arg-type]
+            cnp = (eye(3) - skew(x[6:9, 0])) @ quat_to_dcm(self._pva.quaternion)
 
             out = zeros((2 * num_obs, 1))
             for k in range(num_obs):
