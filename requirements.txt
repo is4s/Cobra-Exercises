@@ -3,22 +3,19 @@
 alabaster==1.0.0
     # via sphinx
 analysis-lcm==0.1.3
-    # via
-    #   analysis-ros
-    #   pntos-cobra
-    #   pntos-python-exercises
-analysis-ros==0.1.1
-    # via pntos-cobra
+    # via pntos-python-exercises
 annotated-types==0.7.0
     # via pydantic
 aspn23==0.1.0
     # via
     #   analysis-lcm
+    #   navanalysis-lcm
     #   pntos-api
     #   pntos-cobra
 aspn23-lcm==0.1.0
     # via
     #   analysis-lcm
+    #   navanalysis-lcm
     #   pntos-cobra
 babel==2.18.0
     # via sphinx
@@ -79,7 +76,9 @@ imagesize==2.0.0
 iniconfig==2.3.0
     # via pytest
 inu==1.1.0
-    # via analysis-lcm
+    # via
+    #   analysis-lcm
+    #   navanalysis-lcm
 itsdangerous==2.2.0
     # via flask
 jinja2==3.1.6
@@ -94,6 +93,7 @@ lcm==1.5.2
     # via
     #   analysis-lcm
     #   aspn23-lcm
+    #   navanalysis-lcm
     #   pntos-cobra
 markdown-it-py==3.0.0 ; python_full_version < '3.11'
     # via
@@ -111,6 +111,7 @@ markupsafe==3.0.3
 matplotlib==3.10.8
     # via
     #   analysis-lcm
+    #   navanalysis-lcm
     #   pntos-cobra
 mdit-py-plugins==0.5.0
     # via myst-parser
@@ -121,9 +122,16 @@ mypy-extensions==1.1.0
     # via mypy
 myst-parser==4.0.1 ; python_full_version < '3.11'
 myst-parser==5.0.0 ; python_full_version >= '3.11'
-navtk==2.1.0.post6.dev0
+navanalysis-lcm==0.1.5
+    # via
+    #   navanalysis-ros
+    #   pntos-cobra
+navanalysis-ros==0.1.2
+    # via pntos-cobra
+navtk==2.1.0.post7.dev0
     # via
     #   analysis-lcm
+    #   navanalysis-lcm
     #   pntos-cobra
 numpy==1.26.4
     # via
@@ -133,6 +141,7 @@ numpy==1.26.4
     #   h5py
     #   inu
     #   matplotlib
+    #   navanalysis-lcm
     #   navtk
     #   pntos-api
     #   pntos-cobra
@@ -153,7 +162,7 @@ pntos-api==2.1.0.post0.dev0
     # via
     #   pntos-cobra
     #   pntos-python-exercises
-pntos-cobra==2.1.0.post0.dev1
+pntos-cobra==2.1.0.post0.dev3
     # via pntos-python-exercises
 pntos-python-datasets-lcm==0.1.0
     # via pntos-python-exercises
@@ -179,6 +188,7 @@ pyyaml==6.0.3
     # via
     #   analysis-lcm
     #   myst-parser
+    #   navanalysis-lcm
 requests==2.32.5
     # via sphinx
 roman-numerals==4.1.0 ; python_full_version >= '3.11'
@@ -188,11 +198,13 @@ scipy==1.15.3 ; python_full_version < '3.11'
     # via
     #   analysis-lcm
     #   inu
+    #   navanalysis-lcm
     #   pntos-cobra
 scipy==1.17.1 ; python_full_version >= '3.11'
     # via
     #   analysis-lcm
     #   inu
+    #   navanalysis-lcm
     #   pntos-cobra
 simple-websocket==1.1.0
     # via python-engineio
@@ -236,17 +248,22 @@ sphinxcontrib-qthelp==2.0.0
 sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
 tabulate==0.10.0
-    # via analysis-lcm
+    # via
+    #   analysis-lcm
+    #   navanalysis-lcm
 tomli==2.4.0 ; python_full_version < '3.11'
     # via
     #   mypy
     #   pytest
     #   sphinx
 tomlkit==0.14.0
-    # via analysis-lcm
+    # via
+    #   analysis-lcm
+    #   navanalysis-lcm
 tqdm==4.67.3
     # via
     #   analysis-lcm
+    #   navanalysis-lcm
     #   pntos-cobra
 typing-extensions==4.15.0
     # via
