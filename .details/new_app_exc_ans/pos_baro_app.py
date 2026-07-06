@@ -123,6 +123,7 @@ my_config = [
                 label='alt',
                 channel='/sensor/bmp388/altitude',
                 state_block_labels=('pinson15', 'alt_fogm'),
+                lever_arm=(0.0, 0.0, 0.0),
             ),
         ),
         inertial_config=InertialConfig(

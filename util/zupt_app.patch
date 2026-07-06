@@ -24,9 +24,9 @@ index cb52986..bd2421b 100755
  
  OUTPUT_LOG = sys.argv[1] if len(sys.argv) > 1 else 'pntos_output.log'
  
-@@ -139,6 +142,14 @@ my_config = [
-                 channel='/sensor/bmp388/altitude',
+@@ -140,6 +143,14 @@ my_config = [
                  state_block_labels=('pinson15', 'alt_fogm'),
+                 lever_arm=(0.0, 0.0, 0.0),
              ),
 +            MeasurementProcessorConfig(
 +                group='config/vel_measurement_processor',
