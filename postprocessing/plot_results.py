@@ -4,8 +4,8 @@ import argparse
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-from analysis.lcm.data import LogData, PvaData
-from analysis.lcm.log_readers import read_pva
+from navanalysis.lcm.data import LogData, PvaData
+from navanalysis.lcm.log_readers import read_pva
 from pntos.cobra.utils import plot_pva
 
 
