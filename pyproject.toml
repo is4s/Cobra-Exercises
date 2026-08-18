@@ -19,7 +19,7 @@ classifiers = [
 dependencies = [
     'navanalysis-lcm==0.1.5',
     "pntos-api>=2.0.0,<3.0.0",
-    'pntos-cobra==2.1.0.post0.dev3',
+    'pntos-cobra==2.1.0.post0.dev4',
     'pntos-python-datasets-lcm==0.1.0',
 ]
 
