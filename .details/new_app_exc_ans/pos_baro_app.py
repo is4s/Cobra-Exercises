@@ -143,17 +143,17 @@ my_config = [
         preprocessor_configs=(
             ImuRotatorConfig(
                 group='config/imu_rotator',
-                channel='/sensor/vn-100/imu',
+                channels=('/sensor/vn-100/imu',),
                 C_imu_to_platform=C_imu_to_platform,
             ),
             TimeAdjusterConfig(
                 group='config/time_adjuster',
-                channel_to_correct='/sensor/vn-100/imu',
+                channels=('/sensor/vn-100/imu',),
                 expected_dt_nsec=int(0.01 * 1e9),
             ),
             BarometerToAltitudeConfig(
                 group='config/pressure_to_alt',
-                channel='/sensor/bmp388/baro_pressure',
+                channels=('/sensor/bmp388/baro_pressure',),
                 alt_sigma=30.0,
             ),
         ),
