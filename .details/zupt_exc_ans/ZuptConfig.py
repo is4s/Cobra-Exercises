@@ -11,5 +11,7 @@ class ZuptConfig(PreprocessorConfig):
 
     identifier: str
 
+    channels: tuple[str, ...] | None
+
     # UNIQUE FIELDS
     stationary_times: NDArray[float64]

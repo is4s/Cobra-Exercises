@@ -169,32 +169,33 @@ my_config = [
         preprocessor_configs=(
             ImuRotatorConfig(
                 group='config/imu_rotator',
-                channel='/sensor/vn-100/imu',
+                channels=('/sensor/vn-100/imu',),
                 C_imu_to_platform=C_imu_to_platform,
             ),
             TimeAdjusterConfig(
                 group='config/time_adjuster',
-                channel_to_correct='/sensor/vn-100/imu',
+                channels=('/sensor/vn-100/imu',),
                 expected_dt_nsec=int(0.01 * 1e9),
             ),
             TimeBiasConfig(
                 group='config/time_bias',
-                channels_to_correct=('/sensor/ublox-ZED-F9T/position',),
+                channels=('/sensor/ublox-ZED-F9T/position',),
                 time_bias=int(0.15 * 1e9),
             ),
             BarometerToAltitudeConfig(
                 group='config/pressure_to_alt',
-                channel='/sensor/bmp388/baro_pressure',
+                channels=('/sensor/bmp388/baro_pressure',),
                 alt_sigma=30.0,
             ),
             OutageConfig(
                 group='config/gps_outage',
-                channel='/sensor/ublox-ZED-F9T/position',
+                channels=('/sensor/ublox-ZED-F9T/position',),
                 start_time=1000.0,
                 end_time=2700.0,
             ),
             ZuptConfig(
                 group='config/zero_vel',
+                channels=None,
                 identifier='zupt_generator',
                 stationary_times=array(STATIONARY_TIME_RANGES, dtype=float),
             ),
