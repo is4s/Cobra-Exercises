@@ -28,7 +28,7 @@ for the lever arm in the sensor config.
 ## Verifying Solution
 
 Since there is no one "right" way to write it, there is also no one "right" way to judge it either.
-Instead, we have provided the results from a nominal solution that own engineers wrote below. Feel
+Instead, we have provided the results from a nominal solution that our own engineers wrote below. Feel
 free to compare our results to yours to see how they match up!
 
 ```{image} images/direction_NED_Pos_Error.png
