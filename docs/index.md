@@ -1,8 +1,8 @@
-# Welcome to the pntOS-Python Exercises
+# Welcome to the Cobra Exercises
 
 This project includes a series of on-your-own exercises to further your understanding of
-pntOS-Python and your ability to write your own plugins and apps. If you haven't already, check out
-the [pntOS-Python documentation](https://is4s.github.io/Cobra) before starting here.
+Cobra and your ability to write your own plugins and apps. If you haven't already, check out
+the [Cobra documentation](https://is4s.github.io/Cobra) before starting here.
 
 % Add a target so we can link back to this section from the installation instructions.
 (set-up-target)=

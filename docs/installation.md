@@ -6,7 +6,7 @@ dependencies installed.
 ## Environment Setup
 
 Setting up your environment is done in three steps: installing native dependencies, cloning the
-pntOS-Python Exercises project, and setting up your Python environment.
+Cobra Exercises project, and setting up your Python environment.
 
 ### Install Native Dependencies
 
@@ -28,10 +28,10 @@ sudo apt update && sudo apt install python3 python3-venv git libglib2.0-dev pyth
 Users of other operating systems will need to install the above packages using
 their operating system's package manager.
 
-### Cloning pntOS-Python Exercises
+### Cloning Cobra Exercises
 
-Next, download the pntOS-Python Exercises project onto your machine. While there are several
-approaches to do so, we suggest you clone the [`pntOS-Python Exercises Git
+Next, download the Cobra Exercises project onto your machine. While there are several
+approaches to do so, we suggest you clone the [`Cobra Exercises Git
 repository`](https://github.com/is4s/Cobra-Exercises) using:
 
 ```shell
@@ -41,7 +41,7 @@ git clone https://github.com/is4s/Cobra-Exercises.git
 Then switch your current working directory to the directory you just created with:
 
 ```shell
-cd pntOS-Python-Exercises
+cd Cobra-Exercises
 ```
 
 Finally, you are now ready to set up your Python environment in the next section.
@@ -64,7 +64,7 @@ virtual environment in the `.venv` folder by running the following command in th
 directory:
 
 ```shell
-python3 -m venv .venv --prompt pntos-python-exercises
+python3 -m venv .venv --prompt cobra-exercises
 ```
 
 Next, enter the virtual environment. The steps to do this vary depending on your shell:

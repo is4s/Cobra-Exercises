@@ -1,4 +1,4 @@
-# pntOS-Python Exercises
+# Cobra Exercises
 
-To view the exercises, visit the [pntOS-Python
+To view the exercises, visit the [Cobra
 Exercises](https://is4s.github.io/Cobra-Exercises/) page.

@@ -11,7 +11,7 @@ from sphinx.application import Sphinx
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = 'pntOS-Python Exercises'
+project = 'Cobra Exercises'
 copyright = '2026, IS4S'
 author = 'IS4S'
 release = '0.1.0'

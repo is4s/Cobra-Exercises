@@ -2,7 +2,7 @@
 
 This exercise is designed to be a beginner friendly interaction with the Cobra system. We recommend
 you start with this exercise as you should develop a familiarity with apps, which is necessary to
-setup and run an instance of pntOS-Python. In this exercise, a partial implementation of the app
+setup and run an instance of Cobra. In this exercise, a partial implementation of the app
 you'll write is at `exercises/new_app_exercise/pos_baro_app.py`. It already has an altitude update,
 so your goal is to add a GPS position update to the stubbed-out app.
 
@@ -68,7 +68,7 @@ through all the basics of an app and the follow-on tutorial will even describe h
 ```
 
 ```{dropdown} I don't know what is required to incorporate a new update.
-In `pntos-python`, incorporating a new measurement involves updating a set of states as well as
+In `Cobra`, incorporating a new measurement involves updating a set of states as well as
 relating the measurements to those states. While not one-to-one, incorporating the position update
 is very similar to how we incorporate the altitude update. Use it as a reference while working
 through this exercise.
