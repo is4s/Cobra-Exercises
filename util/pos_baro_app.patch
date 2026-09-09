@@ -1,5 +1,5 @@
 diff --git a/exercises/new_app_exercise/pos_baro_app.py b/.details/new_app_exc_ans/pos_baro_app.py
-index 5d268e9..0ee3a7d 100755
+index 0a0e0d9..7fffc9d 100755
 --- a/exercises/new_app_exercise/pos_baro_app.py
 +++ b/.details/new_app_exc_ans/pos_baro_app.py
 @@ -36,6 +36,7 @@ from pntos.cobra.config import (

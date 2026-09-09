@@ -1,5 +1,5 @@
 diff --git a/exercises/direction_processor_exercise/direction_app.py b/.details/direction_exc_ans/direction_app.py
-index fb8cab1..ea8a030 100755
+index 7c460ee..82e6062 100755
 --- a/exercises/direction_processor_exercise/direction_app.py
 +++ b/.details/direction_exc_ans/direction_app.py
 @@ -28,6 +28,7 @@ from pntos.cobra.config import (
