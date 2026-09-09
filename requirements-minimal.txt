@@ -58,6 +58,18 @@ lcm==1.5.2
     #   aspn23-lcm
     #   navanalysis-lcm
     #   pntos-cobra
+linkify-it-py==2.1.0
+    # via markdown-it-py
+markdown-it-py==3.0.0 ; python_full_version < '3.11'
+    # via
+    #   mdit-py-plugins
+    #   rich
+    #   textual
+markdown-it-py==4.0.0 ; python_full_version >= '3.11'
+    # via
+    #   mdit-py-plugins
+    #   rich
+    #   textual
 markupsafe==3.0.3
     # via
     #   flask
@@ -67,6 +79,10 @@ matplotlib==3.10.8
     # via
     #   navanalysis-lcm
     #   pntos-cobra
+mdit-py-plugins==0.5.0
+    # via textual
+mdurl==0.1.2
+    # via markdown-it-py
 navanalysis-lcm==0.1.5
     # via
     #   navanalysis-ros
@@ -94,6 +110,8 @@ packaging==26.0
     # via matplotlib
 pillow==12.1.1
     # via matplotlib
+platformdirs==4.11.3
+    # via textual
 pntos-api==2.1.0.post0.dev0
     # via
     #   pntos-cobra
@@ -106,6 +124,10 @@ pydantic==2.13.4
     # via pntos-cobra
 pydantic-core==2.46.4
     # via pydantic
+pygments==2.19.2
+    # via
+    #   rich
+    #   textual
 pyparsing==3.3.2
     # via matplotlib
 python-dateutil==2.9.0.post0
@@ -116,6 +138,8 @@ python-socketio==5.16.2
     # via flask-socketio
 pyyaml==6.0.3
     # via navanalysis-lcm
+rich==15.0.0
+    # via textual
 scipy==1.15.3 ; python_full_version < '3.11'
     # via
     #   inu
@@ -132,6 +156,8 @@ six==1.17.0
     # via python-dateutil
 tabulate==0.10.0
     # via navanalysis-lcm
+textual==8.2.8
+    # via pntos-cobra
 tomlkit==0.14.0
     # via navanalysis-lcm
 tqdm==4.67.3
@@ -140,11 +166,15 @@ tqdm==4.67.3
     #   pntos-cobra
 typing-extensions==4.15.0
     # via
+    #   pntos-cobra
     #   pydantic
     #   pydantic-core
+    #   textual
     #   typing-inspection
 typing-inspection==0.4.2
     # via pydantic
+uc-micro-py==2.0.0
+    # via linkify-it-py
 werkzeug==3.1.8
     # via
     #   flask

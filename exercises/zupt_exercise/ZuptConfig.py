@@ -9,5 +9,7 @@ class ZuptConfig(PreprocessorConfig):
 
     identifier: str
 
+    channels: tuple[str, ...] | None
+
     # UNIQUE FIELDS
     # Add fields to me!
