@@ -78,7 +78,7 @@ through this exercise.
 A list of available measurement processors can be found in the `StandardStateModelingPlugin` docs
 [on this page](https://is4s.github.io/pntOS-Python/autodocs/cobra_internal.html).
 The corresponding identifier must be located in the source code
-[here](https://github.com/is4s/pntOS-Python/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
+[here](https://github.com/is4s/pntOS-Python/blob/main/Cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
 ```
 
 ```{dropdown} I believe I have added the necessary components, but the results don't look the same.

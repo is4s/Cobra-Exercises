@@ -62,12 +62,12 @@ hand. Your solution will be a function of your inputs, so the vital question is,
 solve the problem, but hopefully that question will help get you started. In any solution, though,
 that information will be relayed through config. You can take a look at the config other
 preprocessors require
-[here](https://github.com/is4s/pntOS-Python/blob/main/pntos-cobra/src/pntos/cobra/config/PreprocessorConfig.py).
+[here](https://github.com/is4s/pntOS-Python/blob/main/Cobra/src/pntos/cobra/config/PreprocessorConfig.py).
 ```
 
 ```{dropdown} I know how to solve the problem, but I am not sure how to implement my solution.
 A common place to be! We recommend looking at one (or more) of the
-[off-the-shelf preprocessors](https://github.com/is4s/pntOS-Python/tree/main/pntos-cobra/src/pntos/cobra/standard_plugins/preprocessor)
+[off-the-shelf preprocessors](https://github.com/is4s/pntOS-Python/tree/main/Cobra/src/pntos/cobra/standard_plugins/preprocessor)
 to get an idea of how they solve their respective problems.
 ```
 
