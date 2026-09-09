@@ -43,7 +43,7 @@ by the config.
 
 ## Log Metadata
 
-[Here](https://is4s.github.io/pntOS-Python/example_data.html) is a list of channels and
+[Here](https://is4s.github.io/Cobra/example_data.html) is a list of channels and
 some metadata on the log.
 
 ## Verifying the Solution
@@ -63,7 +63,7 @@ your results should be similar to.
 
 ```{dropdown} What is an app and how do I modify it?
 If this is the position you find yourself in, we recommend you check out our primary documentation
-on the [tutorial apps](https://is4s.github.io/pntOS-Python/apps/pos_ins.html). This will walk
+on the [tutorial apps](https://is4s.github.io/Cobra/apps/pos_ins.html). This will walk
 through all the basics of an app and the follow-on tutorial will even describe how to change it.
 ```
 
@@ -76,9 +76,9 @@ through this exercise.
 
 ```{dropdown} Where do I find a list of measurement processors?
 A list of available measurement processors can be found in the `StandardStateModelingPlugin` docs
-[on this page](https://is4s.github.io/pntOS-Python/autodocs/cobra_internal.html).
+[on this page](https://is4s.github.io/Cobra/autodocs/cobra_internal.html).
 The corresponding identifier must be located in the source code
-[here](https://github.com/is4s/pntOS-Python/blob/main/Cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
+[here](https://github.com/is4s/Cobra/blob/main/pntos-cobra/src/pntos/cobra/standard_plugins/state_modeling/StandardStateModelingPlugin.py)
 ```
 
 ```{dropdown} I believe I have added the necessary components, but the results don't look the same.

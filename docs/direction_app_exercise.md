@@ -17,7 +17,7 @@ can vary.
 
 ## Dataset
 
-The [datafile](https://is4s.github.io/pntOS-Python/example_data.html) used for this example is
+The [datafile](https://is4s.github.io/Cobra/example_data.html) used for this example is
 the same as in the prior exercises. We'll be using the **/sensor/simulated/directiontoknownfeature**
 channel.
 

@@ -2,7 +2,7 @@
 
 This project includes a series of on-your-own exercises to further your understanding of
 pntOS-Python and your ability to write your own plugins and apps. If you haven't already, check out
-the [pntOS-Python documentation](https://is4s.github.io/pntOS-Python) before starting here.
+the [pntOS-Python documentation](https://is4s.github.io/Cobra) before starting here.
 
 % Add a target so we can link back to this section from the installation instructions.
 (set-up-target)=

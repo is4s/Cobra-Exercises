@@ -32,10 +32,10 @@ their operating system's package manager.
 
 Next, download the pntOS-Python Exercises project onto your machine. While there are several
 approaches to do so, we suggest you clone the [`pntOS-Python Exercises Git
-repository`](https://github.com/is4s/pntOS-Python-Exercises) using:
+repository`](https://github.com/is4s/Cobra-Exercises) using:
 
 ```shell
-git clone https://github.com/is4s/pntOS-Python-Exercises.git
+git clone https://github.com/is4s/Cobra-Exercises.git
 ```
 
 Then switch your current working directory to the directory you just created with:

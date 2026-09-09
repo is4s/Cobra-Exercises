@@ -30,7 +30,7 @@ ZUPTs at appropriate times is a valid solution.
 ## Dataset
 
 Like with anything, information about the expected data can play a large part in making educated
-design decisions. [Here](https://is4s.github.io/pntOS-Python/example_data.html) is a page that
+design decisions. [Here](https://is4s.github.io/Cobra/example_data.html) is a page that
 describes the log, its channels, and other information about the log you may find useful.
 
 In the app the `STATIONARY_TIME_RANGES` list contains pairs of timestamps relative to the start
@@ -62,12 +62,12 @@ hand. Your solution will be a function of your inputs, so the vital question is,
 solve the problem, but hopefully that question will help get you started. In any solution, though,
 that information will be relayed through config. You can take a look at the config other
 preprocessors require
-[here](https://github.com/is4s/pntOS-Python/blob/main/Cobra/src/pntos/cobra/config/PreprocessorConfig.py).
+[here](https://github.com/is4s/Cobra/blob/main/pntos-cobra/src/pntos/cobra/config/PreprocessorConfig.py).
 ```
 
 ```{dropdown} I know how to solve the problem, but I am not sure how to implement my solution.
 A common place to be! We recommend looking at one (or more) of the
-[off-the-shelf preprocessors](https://github.com/is4s/pntOS-Python/tree/main/Cobra/src/pntos/cobra/standard_plugins/preprocessor)
+[off-the-shelf preprocessors](https://github.com/is4s/Cobra/tree/main/pntos-cobra/src/pntos/cobra/standard_plugins/preprocessor)
 to get an idea of how they solve their respective problems.
 ```
 
@@ -75,12 +75,12 @@ to get an idea of how they solve their respective problems.
 If you have already created your config and written your preprocessor, a lot of the hard work is
 done! Remember, all of the files in the exercise **must** be edited for adding a preprocessor to
 work. If you have already looked at the plugin but aren't sure of what to do, take a look
-at our [Preprocessor docs](https://is4s.github.io/pntOS-Python/plugins/preprocessor_plugin.html).
+at our [Preprocessor docs](https://is4s.github.io/Cobra/plugins/preprocessor_plugin.html).
 
 The app is already set up to use the `ExercisePreprocessorPlugin`, but is the new config you wrote
 being used? Subsequently, how will the filter process the zero-**velocity** measurements?
 ```{hint}
-There are [off-the-shelf apps](https://github.com/is4s/pntOS-Python/tree/main/apps/standard)
+There are [off-the-shelf apps](https://github.com/is4s/Cobra/tree/main/pntos-cobra-apps/src/pntos/apps/standard)
 that process velocity measurements originating from the log (see the channel name). What source
 identifier do your messages have?
 ```
