@@ -93,7 +93,7 @@ my_config = [
         preprocessor_configs=(
             ImuRotatorConfig(
                 group='config/imu_rotator',
-                channels=('/sensor/vn-100/imu'),
+                channels=('/sensor/vn-100/imu',),
                 C_imu_to_platform=C_imu_to_platform,
             ),
             TimeAdjusterConfig(
