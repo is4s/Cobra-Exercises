@@ -1431,7 +1431,7 @@ wheels = [
 
 [[package]]
 name = "pntos-python-exercises"
-version = "0.1.0.dev0"
+version = "0.1.0.dev1"
 source = { virtual = "." }
 dependencies = [
     { name = "navanalysis-lcm" },
