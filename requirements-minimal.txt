@@ -85,9 +85,9 @@ mdurl==0.1.2
     # via markdown-it-py
 navanalysis-lcm==0.1.5
     # via
+    #   cobra-exercises
     #   navanalysis-ros
     #   pntos-cobra
-    #   pntos-python-exercises
 navanalysis-ros==0.1.2
     # via pntos-cobra
 navtk==2.1.0.post7.dev0
@@ -114,12 +114,12 @@ platformdirs==4.11.3
     # via textual
 pntos-api==2.1.0.post0.dev0
     # via
+    #   cobra-exercises
     #   pntos-cobra
-    #   pntos-python-exercises
 pntos-cobra==2.1.0.post0.dev4
-    # via pntos-python-exercises
+    # via cobra-exercises
 pntos-python-datasets-lcm==0.1.0
-    # via pntos-python-exercises
+    # via cobra-exercises
 pydantic==2.13.4
     # via pntos-cobra
 pydantic-core==2.46.4

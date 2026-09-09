@@ -124,9 +124,9 @@ myst-parser==4.0.1 ; python_full_version < '3.11'
 myst-parser==5.0.0 ; python_full_version >= '3.11'
 navanalysis-lcm==0.1.5
     # via
+    #   cobra-exercises
     #   navanalysis-ros
     #   pntos-cobra
-    #   pntos-python-exercises
 navanalysis-ros==0.1.2
     # via pntos-cobra
 navtk==2.1.0.post7.dev0
@@ -161,12 +161,12 @@ pluggy==1.6.0
     # via pytest
 pntos-api==2.1.0.post0.dev0
     # via
+    #   cobra-exercises
     #   pntos-cobra
-    #   pntos-python-exercises
 pntos-cobra==2.1.0.post0.dev4
-    # via pntos-python-exercises
+    # via cobra-exercises
 pntos-python-datasets-lcm==0.1.0
-    # via pntos-python-exercises
+    # via cobra-exercises
 pntos-python-exercises-docs-data @ git+https://github.com/Open-PNT/navigation-data.git@f3109e4298184da69abd0f0865b1e799e972b566
 pydantic==2.13.4
     # via pntos-cobra
