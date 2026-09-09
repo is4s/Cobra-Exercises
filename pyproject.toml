@@ -28,8 +28,8 @@ dev = [
     'mypy==1.18.2',
     'myst-parser>=4',
     'pip>=24',
-    # pntos-python-exercises/v0 branch, committed 7 May 2026
-    'pntos-python-exercises-docs-data @ git+https://git@github.com/Open-PNT/navigation-data.git@f3109e4298184da69abd0f0865b1e799e972b566',
+    # cobra-exercises branch, committed 9 September 2026
+    'cobra-exercises-docs-data @ git+https://git@github.com/Open-PNT/navigation-data.git@4668e34e5aa6fb42e521bf1515191ed294cb9a43',
     'pytest>=8.2',
     'ruff==0.13.2',
     'sphinx>=7.3.7',

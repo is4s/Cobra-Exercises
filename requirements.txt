@@ -29,6 +29,7 @@ click==8.4.1
     # via
     #   flask
     #   flask-socketio
+cobra-exercises-docs-data @ git+https://github.com/Open-PNT/navigation-data.git@4668e34e5aa6fb42e521bf1515191ed294cb9a43
 colorama==0.4.6 ; sys_platform == 'win32'
     # via
     #   click
@@ -167,7 +168,6 @@ pntos-cobra==2.1.0.post0.dev4
     # via cobra-exercises
 pntos-python-datasets-lcm==0.1.0
     # via cobra-exercises
-pntos-python-exercises-docs-data @ git+https://github.com/Open-PNT/navigation-data.git@f3109e4298184da69abd0f0865b1e799e972b566
 pydantic==2.13.4
     # via pntos-cobra
 pydantic-core==2.46.4
